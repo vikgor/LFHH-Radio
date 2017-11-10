@@ -21,18 +21,20 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         radioButton.setTitle("Play", for: .normal)
-        trackTitleLabel.text = "Connecting..."
+        trackTitleLabel.text = "Press Play..."
     }
-    
-    override func observeValue(forKeyPath: String?, of: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        if forKeyPath != "timedMetadata" { return }
-        let data: AVPlayerItem = (of as? AVPlayerItem)!
-        for item in data.timedMetadata! {
-            print(item.value!)
-            trackTitleLabel.text = item.value as? String
-            // Где-то тут ошибка в опционалах, надо решить
-        }
-    }
+
+    // Observe
+//    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+//        guard keyPath == "timedMetadata" else { return }
+//        guard let meta = playerItem.timedMetadata else { return }
+//        for metadata in meta {
+//            if let songName = metadata.value(forKey: "value") as? String {
+//                print("Now playing: \(songName)")
+//                trackTitleLabel.text = songName
+//            }
+//        }
+//    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -49,15 +51,15 @@ class ViewController: UIViewController {
         radioPlayer = AVPlayer(playerItem: playerItem)
         radioPlayer.play()
         
-        let playerItem = radioPlayer.currentItem
-        playerItem?.addObserver(self, forKeyPath: "timedMetadata", options: NSKeyValueObservingOptions(), context: nil)
+//        let playerItem = radioPlayer.currentItem
+//        playerItem?.addObserver(self, forKeyPath: "timedMetadata", options: NSKeyValueObservingOptions(), context: nil)
         
     }
     
     //Pause the playback
     func pausePlayback() {
         radioPlayer.pause()
-        radioPlayer.currentItem!.removeObserver(self, forKeyPath: "timedMetadata")
+//        radioPlayer.currentItem!.removeObserver(self, forKeyPath: "timedMetadata")
         //        radioPlayer.allowsExternalPlayback = true
         
         trackTitleLabel.text = "Paused..."

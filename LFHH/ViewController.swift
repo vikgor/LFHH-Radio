@@ -22,39 +22,15 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         radioButton.setTitle("Play", for: .normal)
         trackTitleLabel.text = "Connecting..."
-        
-//        let playBackURL = "https://nashe1.hostingradio.ru:80/nashe-64.mp3"
-        let playBackURL = URL(string: "http://62.109.25.83:8000/lofi")
-        playerItem = AVPlayerItem(url: playBackURL!)
-        radioPlayer = AVPlayer(playerItem: playerItem)
-        playerItem.addObserver(self, forKeyPath: "timedMetadata", options: NSKeyValueObservingOptions(), context: nil)
-//        radioPlayer.play()
-    }
-    
-    
-    //Pause the playback
-    func pausePlayback() {
-        radioPlayer.pause()
-        radioPlayer.currentItem!.removeObserver(self, forKeyPath: "timedMetadata")
-        radioPlayer.allowsExternalPlayback = true
-        trackTitleLabel.text = "Paused..."
-    }
-    
-    //Resume the playback
-    func resumePlayback() {
-        radioPlayer.play()
-        playerItem.addObserver(self, forKeyPath: "timedMetadata", options: NSKeyValueObservingOptions(), context: nil)
-        
-        
     }
     
     override func observeValue(forKeyPath: String?, of: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         if forKeyPath != "timedMetadata" { return }
-        let data: AVPlayerItem = of as! AVPlayerItem
+        let data: AVPlayerItem = (of as? AVPlayerItem)!
         for item in data.timedMetadata! {
             print(item.value!)
-            trackTitleLabel.text = item.value! as? String
-           
+            trackTitleLabel.text = item.value as? String
+            // Где-то тут ошибка в опционалах, надо решить
         }
     }
     
@@ -64,24 +40,40 @@ class ViewController: UIViewController {
     }
     
     
+    func resumePlayback() {
+        isPlaying.toggle()
+        radioButton.setTitle("Stop", for: .normal)
+//        let playBackURL = "https://nashe1.hostingradio.ru:80/nashe-64.mp3"
+        let playBackURL = URL(string: "http://62.109.25.83:8000/lofi")
+        playerItem = AVPlayerItem(url: playBackURL!)
+        radioPlayer = AVPlayer(playerItem: playerItem)
+        radioPlayer.play()
+        
+        let playerItem = radioPlayer.currentItem
+        playerItem?.addObserver(self, forKeyPath: "timedMetadata", options: NSKeyValueObservingOptions(), context: nil)
+        
+    }
     
+    //Pause the playback
+    func pausePlayback() {
+        radioPlayer.pause()
+        radioPlayer.currentItem!.removeObserver(self, forKeyPath: "timedMetadata")
+        //        radioPlayer.allowsExternalPlayback = true
+        
+        trackTitleLabel.text = "Paused..."
+        isPlaying.toggle()
+        radioButton.setTitle("Play", for: .normal)
+    }
     
-    
+
     @IBAction func playRadio(_ sender: UIButton) {
         switch isPlaying {
         case false:
             resumePlayback()
-            isPlaying.toggle()
-            print(isPlaying)
-            radioButton.setTitle("Stop", for: .normal)
+            print("It's playing")
         default:
             pausePlayback()
-            isPlaying.toggle()
-            print(isPlaying)
-            radioButton.setTitle("Play", for: .normal)
-            
-            
-            
+            print("It's NOT playing")
         }
     }
     

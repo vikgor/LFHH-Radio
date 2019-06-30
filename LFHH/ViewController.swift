@@ -12,6 +12,8 @@ import AVFoundation
 class ViewController: UIViewController {
 
     @IBOutlet weak var radioButton: UIButton!
+    @IBOutlet weak var trackTitleLabel: UILabel!
+    
     var isPlaying = false
     var radioPlayer = AVPlayer()
     var playerItem: AVPlayerItem!
@@ -19,6 +21,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         radioButton.setTitle("Play", for: .normal)
+        trackTitleLabel.text = "Connecting..."
         
 //        let playBackURL = "https://nashe1.hostingradio.ru:80/nashe-64.mp3"
         let playBackURL = URL(string: "http://62.109.25.83:8000/lofi")
@@ -26,8 +29,23 @@ class ViewController: UIViewController {
         radioPlayer = AVPlayer(playerItem: playerItem)
         playerItem.addObserver(self, forKeyPath: "timedMetadata", options: NSKeyValueObservingOptions(), context: nil)
 //        radioPlayer.play()
-
-
+    }
+    
+    
+    //Pause the playback
+    func pausePlayback() {
+        radioPlayer.pause()
+        radioPlayer.currentItem!.removeObserver(self, forKeyPath: "timedMetadata")
+        radioPlayer.allowsExternalPlayback = true
+        trackTitleLabel.text = "Paused..."
+    }
+    
+    //Resume the playback
+    func resumePlayback() {
+        radioPlayer.play()
+        playerItem.addObserver(self, forKeyPath: "timedMetadata", options: NSKeyValueObservingOptions(), context: nil)
+        
+        
     }
     
     override func observeValue(forKeyPath: String?, of: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
@@ -35,28 +53,37 @@ class ViewController: UIViewController {
         let data: AVPlayerItem = of as! AVPlayerItem
         for item in data.timedMetadata! {
             print(item.value!)
+            trackTitleLabel.text = item.value! as? String
+           
         }
     }
     
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    
+    
+    
+    
     @IBAction func playRadio(_ sender: UIButton) {
-        radioPlayer.play()
-        
         switch isPlaying {
         case false:
-            radioPlayer.play()
+            resumePlayback()
             isPlaying.toggle()
             print(isPlaying)
             radioButton.setTitle("Stop", for: .normal)
-            
         default:
-            radioPlayer.pause()
+            pausePlayback()
             isPlaying.toggle()
             print(isPlaying)
             radioButton.setTitle("Play", for: .normal)
+            
+            
+            
         }
     }
     
-    
-
 }
 

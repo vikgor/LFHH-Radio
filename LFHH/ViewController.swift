@@ -33,9 +33,10 @@ class ViewController: UIViewController {
         } catch {
             print(error)
         }
+        
     }
 
-//     Observe
+    //Observe - get metadata
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         guard keyPath == "timedMetadata" else { return }
         guard let meta = playerItem.timedMetadata else { return }
@@ -57,9 +58,7 @@ class ViewController: UIViewController {
         isPlaying.toggle()
         radioButton.setTitle("Stop", for: .normal)
 //        let playBackURL = "https://nashe1.hostingradio.ru:80/nashe-64.mp3"
-        
-        
-        
+
         let playBackURL = URL(string: "http://62.109.25.83:8000/lofi")
         playerItem = AVPlayerItem(url: playBackURL!)
         radioPlayer = AVPlayer(playerItem: playerItem)

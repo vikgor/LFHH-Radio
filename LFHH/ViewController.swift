@@ -10,7 +10,6 @@ import UIKit
 import AVFoundation
 import MediaPlayer
 
-
 class ViewController: UIViewController {
 
     @IBOutlet weak var radioButton: UIButton!
@@ -19,7 +18,6 @@ class ViewController: UIViewController {
     var isPlaying = false
     var radioPlayer = AVPlayer()
     var playerItem: AVPlayerItem!
-    
     
     var currentlyPlaying : String?
     var Track = ""
@@ -30,7 +28,7 @@ class ViewController: UIViewController {
         radioButton.setTitle("Play", for: .normal)
         trackTitleLabel.text = "Press Play..."
         
-        
+        setupRemoteTransportControls()
         
         
         
@@ -43,20 +41,12 @@ class ViewController: UIViewController {
         } catch {
             print(error)
         }
-        
-        
     }
     
 
-    func setupNowPlaying() {
-        // Define Now Playing Info
-        var nowPlayingInfo = [String : Any]()
-        nowPlayingInfo[MPMediaItemPropertyTitle] = "My Movie"
-        
-        
-        // Set the metadata
-        MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
-    }
+    
+    
+    
     
     //Observe - get metadata
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
@@ -82,9 +72,33 @@ class ViewController: UIViewController {
                 }
                 print("the artist is \(Artist)")
                 print("The track is \(Track)")
-
+                
+                setupNowPlaying()
             }
         }
+    }
+    
+    func setupRemoteTransportControls() {
+        // Get the shared MPRemoteCommandCenter
+        let commandCenter = MPRemoteCommandCenter.shared()
+        // Add handler for Play Command
+        commandCenter.playCommand.addTarget { [unowned self] event in
+            self.radioPlayer.play()
+            return .success
+        }
+        
+        // Add handler for Pause Command
+        commandCenter.pauseCommand.addTarget { [unowned self] event in
+            self.radioPlayer.pause()
+            return .success
+        }
+    }
+    
+    func setupNowPlaying() {
+        MPNowPlayingInfoCenter.default().nowPlayingInfo = [
+            MPMediaItemPropertyArtist: Artist,
+            MPMediaItemPropertyTitle: Track
+        ]
     }
     
     override func didReceiveMemoryWarning() {
@@ -106,7 +120,6 @@ class ViewController: UIViewController {
         
         let playerItem = radioPlayer.currentItem
         playerItem?.addObserver(self, forKeyPath: "timedMetadata", options: NSKeyValueObservingOptions(), context: nil)
-        
     }
     
     //Pause the playback
@@ -131,6 +144,5 @@ class ViewController: UIViewController {
             print("It's NOT playing")
         }
     }
-    
 }
 

@@ -10,5 +10,6 @@
 - design
 - sleep timer
 - alarm
+- add "Live" mark in lock screen and control center: https://stackoverflow.com/questions/45203482/mpnowplayinginfocenter-live-icon?rq=1
 
 

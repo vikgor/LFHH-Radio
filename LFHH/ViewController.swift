@@ -9,6 +9,7 @@
 import UIKit
 import AVFoundation
 
+
 class ViewController: UIViewController {
 
     @IBOutlet weak var radioButton: UIButton!
@@ -17,12 +18,15 @@ class ViewController: UIViewController {
     var isPlaying = false
     var radioPlayer = AVPlayer()
     var playerItem: AVPlayerItem!
+    
+    var currentlyPlaying : String?
+    var Track = ""
+    var Artist = ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
         radioButton.setTitle("Play", for: .normal)
         trackTitleLabel.text = "Press Play..."
-        
         
         //make audio work in background
         do {
@@ -35,7 +39,7 @@ class ViewController: UIViewController {
         }
         
     }
-
+    
     //Observe - get metadata
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         guard keyPath == "timedMetadata" else { return }
@@ -44,9 +48,29 @@ class ViewController: UIViewController {
             if let songName = metadata.value(forKey: "value") as? String {
                 print("Now playing: \(songName)")
                 trackTitleLabel.text = songName
+                
+                // Split artist and track into seperate strings
+                currentlyPlaying = songName
+                var stringParts = [String]()
+                if currentlyPlaying?.range(of: " - ") != nil {
+                    stringParts = currentlyPlaying!.components(separatedBy: " - ")
+                } else {
+                    stringParts = currentlyPlaying!.components(separatedBy: "-")
+                }
+                // Asigns artist and track to variables
+                if stringParts.count > 1 {
+                    Track = stringParts[1]
+                    Artist = stringParts[0]
+                }
+                print("the artist is \(Artist)")
+                print("The track is \(Track)")
+
             }
         }
     }
+    
+    
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

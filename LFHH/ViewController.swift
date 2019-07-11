@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+import MediaPlayer
 
 
 class ViewController: UIViewController {
@@ -19,6 +20,7 @@ class ViewController: UIViewController {
     var radioPlayer = AVPlayer()
     var playerItem: AVPlayerItem!
     
+    
     var currentlyPlaying : String?
     var Track = ""
     var Artist = ""
@@ -28,9 +30,13 @@ class ViewController: UIViewController {
         radioButton.setTitle("Play", for: .normal)
         trackTitleLabel.text = "Press Play..."
         
+        
+        
+        
+        
         //make audio work in background
         do {
-            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: [.mixWithOthers, .allowAirPlay])
+            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: [.allowAirPlay])
             print("Playback OK")
             try AVAudioSession.sharedInstance().setActive(true)
             print("Session is Active")
@@ -38,6 +44,18 @@ class ViewController: UIViewController {
             print(error)
         }
         
+        
+    }
+    
+
+    func setupNowPlaying() {
+        // Define Now Playing Info
+        var nowPlayingInfo = [String : Any]()
+        nowPlayingInfo[MPMediaItemPropertyTitle] = "My Movie"
+        
+        
+        // Set the metadata
+        MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
     }
     
     //Observe - get metadata
@@ -69,9 +87,6 @@ class ViewController: UIViewController {
         }
     }
     
-    
-    
-    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -83,7 +98,8 @@ class ViewController: UIViewController {
         radioButton.setTitle("Stop", for: .normal)
 //        let playBackURL = "https://nashe1.hostingradio.ru:80/nashe-64.mp3"
 
-        let playBackURL = URL(string: "http://62.109.25.83:8000/lofi")
+        let playBackURL = URL(string: "https://vivalaresistance.ru/radio")
+//        let playBackURL = URL(string: "http://62.109.25.83:8000/lofi")
         playerItem = AVPlayerItem(url: playBackURL!)
         radioPlayer = AVPlayer(playerItem: playerItem)
         radioPlayer.play()

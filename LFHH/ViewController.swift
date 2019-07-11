@@ -95,9 +95,16 @@ class ViewController: UIViewController {
     }
     
     func setupNowPlaying() {
+        let image = UIImage(named: "lofinight")!
+        let albumArt = MPMediaItemArtwork.init(boundsSize: image.size, requestHandler: { (size) -> UIImage in
+            return image
+        })
+        
         MPNowPlayingInfoCenter.default().nowPlayingInfo = [
+            MPNowPlayingInfoPropertyIsLiveStream: true,
             MPMediaItemPropertyArtist: Artist,
-            MPMediaItemPropertyTitle: Track
+            MPMediaItemPropertyTitle: Track,
+            MPMediaItemPropertyArtwork: albumArt
         ]
     }
     

@@ -2,7 +2,7 @@
 
 ## TO DO:
 
-- show track title and controls in control panel & lock screen
+- ☑️show track title and controls in control panel & lock screen
 - add loading labels (between the pressed button and audio actually playing)
 - add volume & airplay
 - battery drain problem?

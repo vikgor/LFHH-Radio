@@ -70,8 +70,15 @@ class ViewController: UIViewController {
                     Track = stringParts[1]
                     Artist = stringParts[0]
                 }
-                print("the artist is \(Artist)")
+                print("The artist is \(Artist)")
                 print("The track is \(Track)")
+                
+                //See if the radio is online by checking the metadata
+                if songName == "Lavf56.15.102" {
+                    trackTitleLabel.text = "Offline... stay tuned!"
+                    Artist = "LFHH"
+                    Track = "offline..."
+                }
                 
                 setupNowPlaying()
             }

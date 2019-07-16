@@ -23,13 +23,17 @@ class ViewController: UIViewController {
     var Track = ""
     var Artist = ""
 
+    var playImage = UIImage(named: "play-button-white")
+    var pauseImage = UIImage(named: "pause-button-white")
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        radioButton.setTitle("Play", for: .normal)
+//        radioButton.setTitle("Play", for: .normal)
+        radioButton.setImage(playImage, for: .normal)
+        
         trackTitleLabel.text = "Press Play..."
         
         setupRemoteTransportControls()
-        
         
         
         //make audio work in background
@@ -123,7 +127,8 @@ class ViewController: UIViewController {
     
     func resumePlayback() {
         isPlaying.toggle()
-        radioButton.setTitle("Stop", for: .normal)
+//        radioButton.setTitle("Stop", for: .normal)
+        radioButton.setImage(pauseImage, for: .normal)
 //        let playBackURL = "https://nashe1.hostingradio.ru:80/nashe-64.mp3"
 
 //        let playBackURL = URL(string: "https://vivalaresistance.ru/radio")
@@ -134,6 +139,8 @@ class ViewController: UIViewController {
         
         let playerItem = radioPlayer.currentItem
         playerItem?.addObserver(self, forKeyPath: "timedMetadata", options: NSKeyValueObservingOptions(), context: nil)
+        
+        trackTitleLabel.text = "connecting..."
     }
     
     //Pause the playback
@@ -144,7 +151,8 @@ class ViewController: UIViewController {
         
         trackTitleLabel.text = "Paused..."
         isPlaying.toggle()
-        radioButton.setTitle("Play", for: .normal)
+//        radioButton.setTitle("Play", for: .normal)
+        radioButton.setImage(playImage, for: .normal)
     }
     
 

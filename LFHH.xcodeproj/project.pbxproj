@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		05A6A0C122E784AB00DB5631 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A6A0C022E784AB00DB5631 /* TableViewController.swift */; };
 		05C5B2AB22C91CAF008BEF3D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05C5B2AA22C91CAF008BEF3D /* AppDelegate.swift */; };
 		05C5B2AD22C91CAF008BEF3D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05C5B2AC22C91CAF008BEF3D /* ViewController.swift */; };
 		05C5B2B022C91CAF008BEF3D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 05C5B2AE22C91CAF008BEF3D /* Main.storyboard */; };
@@ -15,6 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		05A6A0C022E784AB00DB5631 /* TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		05AE043422C98E2F000DCDB1 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		05C5B2A722C91CAF008BEF3D /* LFHH.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LFHH.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		05C5B2AA22C91CAF008BEF3D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -59,6 +61,7 @@
 				05C5B2AC22C91CAF008BEF3D /* ViewController.swift */,
 				05AE043422C98E2F000DCDB1 /* README.md */,
 				05C5B2AE22C91CAF008BEF3D /* Main.storyboard */,
+				05A6A0C022E784AB00DB5631 /* TableViewController.swift */,
 				05C5B2B122C91CB0008BEF3D /* Assets.xcassets */,
 				05C5B2B322C91CB0008BEF3D /* LaunchScreen.storyboard */,
 				05C5B2B622C91CB0008BEF3D /* Info.plist */,
@@ -143,6 +146,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				05C5B2AD22C91CAF008BEF3D /* ViewController.swift in Sources */,
+				05A6A0C122E784AB00DB5631 /* TableViewController.swift in Sources */,
 				05C5B2AB22C91CAF008BEF3D /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

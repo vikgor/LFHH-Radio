@@ -14,6 +14,10 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var radioButton: UIButton!
     @IBOutlet weak var trackTitleLabel: UILabel!
+    @IBOutlet weak var radioVolume: UISlider!
+    @IBAction func radioVolume(_ sender: Any) {
+        radioPlayer.volume = radioVolume.value
+    }
     
     var isPlaying = false
     var radioPlayer = AVPlayer()

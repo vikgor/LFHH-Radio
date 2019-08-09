@@ -135,7 +135,7 @@ class ViewController: UIViewController {
         radioButton.setImage(pauseImage, for: .normal)
 //        let playBackURL = "https://nashe1.hostingradio.ru:80/nashe-64.mp3"
 
-//        let playBackURL = URL(string: "https://vivalaresistance.ru/radio")
+//        let playBackURL = URL(string: "https://vivalaresistance.ru/streamradio")
         let playBackURL = URL(string: "http://62.109.25.83:8000/lofi")
         playerItem = AVPlayerItem(url: playBackURL!)
         radioPlayer = AVPlayer(playerItem: playerItem)

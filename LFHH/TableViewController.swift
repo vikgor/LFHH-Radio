@@ -18,6 +18,7 @@ class TableViewController: UITableViewController {
     
     func getRadioHistory() {
         let myURLString = "https://8137147.xyz/1/playlist/playlist.php"
+//        let myURLString = "https://vivalaresistance.ru/lfhh/lfhhhistory.php"
         
         guard let myURL = NSURL(string: myURLString) else {
             print("Error: \(myURLString) doesn't seem to be a valid URL")
@@ -31,6 +32,15 @@ class TableViewController: UITableViewController {
             print("Error: \(error)")
         }
     }
+    
+    @objc func refresh(sender:AnyObject)
+    {
+        // Updating your data here...
+        getRadioHistory()
+        
+        self.tableView.reloadData()
+        self.refreshControl?.endRefreshing()
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,6 +52,9 @@ class TableViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
         
         getRadioHistory()
+        
+        self.refreshControl?.addTarget(self, action: #selector(refresh), for: UIControl.Event.valueChanged)
+
     }
 
     // MARK: - Table view data source

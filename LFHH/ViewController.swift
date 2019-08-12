@@ -14,10 +14,7 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var radioButton: UIButton!
     @IBOutlet weak var trackTitleLabel: UILabel!
-    @IBOutlet weak var radioVolume: UISlider!
-    @IBAction func radioVolume(_ sender: Any) {
-        radioPlayer.volume = radioVolume.value
-    }
+    @IBOutlet weak var mpVolumeHolderView: UIView!
     
     var isPlaying = false
     var radioPlayer = AVPlayer()
@@ -49,12 +46,16 @@ class ViewController: UIViewController {
         } catch {
             print(error)
         }
+        
+        // MPVolumeView
+        // Set the holder view’s background color to transparent
+        mpVolumeHolderView.backgroundColor = .clear
+        let mpVolume = MPVolumeView(frame: mpVolumeHolderView.bounds)
+        mpVolume.showsRouteButton = true
+        mpVolumeHolderView.addSubview(mpVolume)
+        view.addSubview(mpVolumeHolderView)
+//        view.backgroundColor = .darkGray
     }
-    
-
-    
-    
-    
     
     //Observe - get metadata
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {

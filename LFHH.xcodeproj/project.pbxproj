@@ -43,6 +43,7 @@
 			children = (
 				05C5B2A922C91CAF008BEF3D /* LFHH */,
 				05C5B2A822C91CAF008BEF3D /* Products */,
+				05AE043422C98E2F000DCDB1 /* README.md */,
 			);
 			sourceTree = "<group>";
 		};
@@ -59,7 +60,6 @@
 			children = (
 				05C5B2AA22C91CAF008BEF3D /* AppDelegate.swift */,
 				05C5B2AC22C91CAF008BEF3D /* ViewController.swift */,
-				05AE043422C98E2F000DCDB1 /* README.md */,
 				05C5B2AE22C91CAF008BEF3D /* Main.storyboard */,
 				05A6A0C022E784AB00DB5631 /* TableViewController.swift */,
 				05C5B2B122C91CB0008BEF3D /* Assets.xcassets */,

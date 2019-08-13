@@ -20,6 +20,8 @@ class ViewController: UIViewController {
     var radioPlayer = AVPlayer()
     var playerItem: AVPlayerItem!
     
+    let ncObserver = NotificationCenter.default
+    
     var currentlyPlaying : String?
     var Track = ""
     var Artist = ""
@@ -55,6 +57,8 @@ class ViewController: UIViewController {
         mpVolumeHolderView.addSubview(mpVolume)
         view.addSubview(mpVolumeHolderView)
 //        view.backgroundColor = .darkGray
+        
+        ncObserver.addObserver(self, selector: #selector(self.pausePlayback), name: Notification.Name("PauseMusic"), object: nil)
     }
     
     //Observe - get metadata
@@ -149,7 +153,7 @@ class ViewController: UIViewController {
     }
     
     //Pause the playback
-    func pausePlayback() {
+    @objc func pausePlayback() {
         radioPlayer.pause()
         radioPlayer.currentItem!.removeObserver(self, forKeyPath: "timedMetadata")
         //        radioPlayer.allowsExternalPlayback = true
@@ -171,5 +175,8 @@ class ViewController: UIViewController {
             print("It's NOT playing")
         }
     }
+    
+    func stupid() {
+        print("This stupid shit works")
+    }
 }
-

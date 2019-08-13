@@ -13,6 +13,7 @@
 		05C5B2B022C91CAF008BEF3D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 05C5B2AE22C91CAF008BEF3D /* Main.storyboard */; };
 		05C5B2B222C91CB0008BEF3D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 05C5B2B122C91CB0008BEF3D /* Assets.xcassets */; };
 		05C5B2B522C91CB0008BEF3D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 05C5B2B322C91CB0008BEF3D /* LaunchScreen.storyboard */; };
+		05E6E4DD230327DD001B7812 /* TimerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E6E4DC230327DD001B7812 /* TimerViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +26,7 @@
 		05C5B2B122C91CB0008BEF3D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		05C5B2B422C91CB0008BEF3D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		05C5B2B622C91CB0008BEF3D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		05E6E4DC230327DD001B7812 /* TimerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,9 +62,10 @@
 			children = (
 				05C5B2AA22C91CAF008BEF3D /* AppDelegate.swift */,
 				05C5B2AC22C91CAF008BEF3D /* ViewController.swift */,
-				05C5B2AE22C91CAF008BEF3D /* Main.storyboard */,
 				05A6A0C022E784AB00DB5631 /* TableViewController.swift */,
+				05E6E4DC230327DD001B7812 /* TimerViewController.swift */,
 				05C5B2B122C91CB0008BEF3D /* Assets.xcassets */,
+				05C5B2AE22C91CAF008BEF3D /* Main.storyboard */,
 				05C5B2B322C91CB0008BEF3D /* LaunchScreen.storyboard */,
 				05C5B2B622C91CB0008BEF3D /* Info.plist */,
 			);
@@ -145,6 +148,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				05E6E4DD230327DD001B7812 /* TimerViewController.swift in Sources */,
 				05C5B2AD22C91CAF008BEF3D /* ViewController.swift in Sources */,
 				05A6A0C122E784AB00DB5631 /* TableViewController.swift in Sources */,
 				05C5B2AB22C91CAF008BEF3D /* AppDelegate.swift in Sources */,

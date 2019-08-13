@@ -26,7 +26,7 @@ class TableViewController: UITableViewController {
         }
         
         do {
-            let myHTMLString = try String(contentsOf: myURL as URL)
+            let myHTMLString = try String(contentsOf: myURL as URL, encoding: .windowsCP1251)
             historyArray = myHTMLString.split {$0.isNewline}
         } catch let error as NSError {
             print("Error: \(error)")

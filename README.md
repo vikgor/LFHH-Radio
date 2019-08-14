@@ -14,9 +14,10 @@
     - [x] Refresh with pull [link](https://stackoverflow.com/questions/24475792/how-to-use-pull-to-refresh-in-swift)
 - [ ] sleep timer
     - [x] Stop audio on button press from another VC [link](http://www.systeen.com/2016/12/02/stop-audio-player-another-view-controller-using-notificationcenter-swift-3/)
-    - [ ] Fix crash on sleep timer pausing the unplaying audio
+    - [x] Fix crash on sleep timer pausing the unplaying audio
     - [ ] Set up time with Picker View
 - [ ] alarm
+- [ ] Long track titles fix
 - [ ] battery drain problem?
 - [ ] add views/buttons (my contacts, song history, save current song option, other links and stuff)
 - [ ] Design

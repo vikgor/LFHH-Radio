@@ -151,14 +151,17 @@ class ViewController: UIViewController {
     
     //Pause the playback
     @objc func pausePlayback() {
+        if isPlaying == true {
+        isPlaying.toggle()
         radioPlayer.pause()
-        radioPlayer.currentItem!.removeObserver(self, forKeyPath: "timedMetadata")
+//        radioPlayer.currentItem!.removeObserver(self, forKeyPath: "timedMetadata") //in case there's a bug - this is how it used to be and worked perfectly, I'll delete this in a while
+        radioPlayer.currentItem?.removeObserver(self, forKeyPath: "timedMetadata")
         //        radioPlayer.allowsExternalPlayback = true
         
         trackTitleLabel.text = "Paused..."
-        isPlaying.toggle()
 //        radioButton.setTitle("Play", for: .normal)
         radioButton.setImage(playImage, for: .normal)
+        }
     }
     
 

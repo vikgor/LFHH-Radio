@@ -20,8 +20,6 @@ class ViewController: UIViewController {
     var radioPlayer = AVPlayer()
     var playerItem: AVPlayerItem!
     
-    let ncObserver = NotificationCenter.default
-    
     var currentlyPlaying : String?
     var Track = ""
     var Artist = ""
@@ -29,15 +27,15 @@ class ViewController: UIViewController {
     var playImage = UIImage(named: "play-button-white")
     var pauseImage = UIImage(named: "pause-button-white")
     
+    let timerObserver = NotificationCenter.default
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-//        radioButton.setTitle("Play", for: .normal)
         radioButton.setImage(playImage, for: .normal)
-        
         trackTitleLabel.text = "Press Play..."
-        
         setupRemoteTransportControls()
-        
+        timerObserver.addObserver(self, selector: #selector(self.pausePlayback), name: Notification.Name("PauseMusic"), object: nil)
         
         //make audio work in background
         do {
@@ -58,7 +56,6 @@ class ViewController: UIViewController {
         view.addSubview(mpVolumeHolderView)
 //        view.backgroundColor = .darkGray
         
-        ncObserver.addObserver(self, selector: #selector(self.pausePlayback), name: Notification.Name("PauseMusic"), object: nil)
     }
     
     //Observe - get metadata
@@ -174,9 +171,5 @@ class ViewController: UIViewController {
             pausePlayback()
             print("It's NOT playing")
         }
-    }
-    
-    func stupid() {
-        print("This stupid shit works")
     }
 }

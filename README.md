@@ -8,16 +8,16 @@
     - [x] Fix volume [link](https://medium.com/@javedmultani16/mpvolumeview-ios-ac2af8ac7a0)
     - [x] Check AirPlay
 - [x] add "Live" mark in lock screen and control center [link](https://stackoverflow.com/questions/45203482/mpnowplayinginfocenter-live-icon?rq=1)
-- [ ] History -> Table View
+- [x] History -> Table View
     - [x] Get 10 tracks and populate tableview
     - [x] Normal encoding
-    - [x] Reload with swipe [link](https://stackoverflow.com/questions/24475792/how-to-use-pull-to-refresh-in-swift)
-    - [ ] Design
+    - [x] Refresh with pull [link](https://stackoverflow.com/questions/24475792/how-to-use-pull-to-refresh-in-swift)
 - [ ] sleep timer
     - [x] Stop audio on button press from another VC [link](http://www.systeen.com/2016/12/02/stop-audio-player-another-view-controller-using-notificationcenter-swift-3/)
+    - [ ] Fix crash on sleep timer pausing the unplaying audio
     - [ ] Set up time with Picker View
 - [ ] alarm
 - [ ] battery drain problem?
 - [ ] add views/buttons (my contacts, song history, save current song option, other links and stuff)
-- [ ] design
+- [ ] Design
 

@@ -10,6 +10,7 @@ import UIKit
 
 class TableViewController: UITableViewController {
     
+    let screenSize: CGRect = UIScreen.main.bounds
     var historyArray: [String.SubSequence]? {
         didSet {
             tableView.reloadData()
@@ -17,8 +18,8 @@ class TableViewController: UITableViewController {
     }
     
     func getRadioHistory() {
-        let myURLString = "https://8137147.xyz/1/playlist/playlist.php"
-//        let myURLString = "https://vivalaresistance.ru/lfhh/lfhhhistory.php"
+//        let myURLString = "https://8137147.xyz/1/playlist/playlist.php"
+        let myURLString = "https://vivalaresistance.ru/lfhh/lfhhhistory.php"
         
         guard let myURL = NSURL(string: myURLString) else {
             print("Error: \(myURLString) doesn't seem to be a valid URL")
@@ -45,6 +46,9 @@ class TableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        
+        tableView.rowHeight = screenSize.height * 0.09
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -55,6 +59,11 @@ class TableViewController: UITableViewController {
         
         self.refreshControl?.addTarget(self, action: #selector(refresh), for: UIControl.Event.valueChanged)
 
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        print("Getting updated playlist...")
+        getRadioHistory()
     }
 
     // MARK: - Table view data source
@@ -73,9 +82,8 @@ class TableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "historyCell", for: indexPath)
 
-//        cell.textLabel?.text = myarray[indexPath.row]
         cell.textLabel?.text = String(historyArray![indexPath.item])
-
+        cell.textLabel?.textColor = .white
         return cell
     }
     

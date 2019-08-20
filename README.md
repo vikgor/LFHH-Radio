@@ -18,6 +18,7 @@
     - [x] Set up time with Picker View
     - [ ] Show countdown timer or any other indication of a timer turned on
     - [ ] Check if timer is currently on, reset it on a new start
+- [ ] Resume audio after interruption
 - [ ] alarm
 - [ ] Long track titles fix
 - [ ] battery drain problem?

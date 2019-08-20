@@ -82,6 +82,7 @@ class TimerViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
                 self.sleepTimerMinutes.isUserInteractionEnabled = true
         }
         
+        
         if isPlaying{
             timerButton.setTitle("Stop", for: .normal)
             timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(countdownTimer), userInfo: nil, repeats: true)

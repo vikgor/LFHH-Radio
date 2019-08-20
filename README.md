@@ -23,4 +23,3 @@
 - [ ] battery drain problem?
 - [ ] add views/buttons (my contacts, song history, save current song option, other links and stuff)
 - [ ] Design
-

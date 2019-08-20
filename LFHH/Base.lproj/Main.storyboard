@@ -93,9 +93,9 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1ft-II-thO">
-                                <rect key="frame" x="163.5" y="560" width="48" height="42"/>
+                                <rect key="frame" x="156.5" y="560" width="62" height="42"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                <state key="normal" title="Chill"/>
+                                <state key="normal" title="Sleep"/>
                                 <connections>
                                     <action selector="timerButton:" destination="rLR-lZ-JIt" eventType="touchUpInside" id="rr7-GL-aWk"/>
                                 </connections>

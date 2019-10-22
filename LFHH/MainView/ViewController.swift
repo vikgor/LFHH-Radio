@@ -53,26 +53,26 @@ class ViewController: UIViewController {
         guard keyPath == "timedMetadata" else { return }
         guard let meta = playerItem.timedMetadata else { return }
         for metadata in meta {
-            if let songName = metadata.value(forKey: "value") as? String {
+            if let originalFileName = metadata.value(forKey: "value") as? String {
                 
-                trackTitleLabel.text = songName
-                
-                checkIfAlive(songName: songName)
-                splitFileNameIntoArtistAndTrack(songName: songName)
+                splitFileNameIntoArtistAndTrack(originalFileName: originalFileName)
                 setupNowPlaying()
                 
                 print("NEW SONG")
-                print("File name: \(songName)")
+                print("File name: \(originalFileName)")
                 print("Artist: \(interactor.currentlyPlaying.artist)")
                 print("Track: \(interactor.currentlyPlaying.track)")
                 
+                updateMainLabel(trackTitle: originalFileName)
+                checkIfAlive(originalFileName: originalFileName)
+
             }
         }
     }
     
-    func splitFileNameIntoArtistAndTrack(songName: String) {
+    func splitFileNameIntoArtistAndTrack(originalFileName: String) {
         // Split artist and track into seperate strings
-        interactor.currentlyPlaying.fileName = songName
+        interactor.currentlyPlaying.fileName = originalFileName
         var stringParts = [String]()
         if interactor.currentlyPlaying.fileName?.range(of: " - ") != nil {
             stringParts = interactor.currentlyPlaying.fileName!.components(separatedBy: " - ")
@@ -86,12 +86,13 @@ class ViewController: UIViewController {
         }
     }
     
-    func checkIfAlive(songName: String) {
+    func checkIfAlive(originalFileName: String) {
         //See if the radio is online by checking the metadata
-        if songName == "Lavf56.15.102" {
-            trackTitleLabel.text = "Offline... stay tuned!"
+        if (originalFileName == ("Lavf56.15.102") || originalFileName == ("B4A7D6322MH1376302278118826")) {
             interactor.currentlyPlaying.artist = "LFHH"
             interactor.currentlyPlaying.track = "offline..."
+            
+            updateMainLabel(trackTitle: "Offline... stay tuned!")
         }
     }
     
@@ -110,9 +111,10 @@ class ViewController: UIViewController {
     }
     // MARK: INTERACTOR ends here
     
+    func updateMainLabel(trackTitle: String) {
+        trackTitleLabel.text = trackTitle
+    }
     
-    
-   // MARK: PRESENTER
     func changeTrackTitle(title: String) {
         trackTitleLabel.text = title
     }
@@ -120,7 +122,8 @@ class ViewController: UIViewController {
     func setButtonImage(image: UIImage) {
         radioButton.setImage(image, for: .normal)
     }
-    
+
+    // MARK: PRESENTER
     func addVolumeControls() {
         // MPVolumeView (This adds volume control to the Main View)
         mpVolumeHolderView.backgroundColor = .clear
@@ -139,7 +142,7 @@ class ViewController: UIViewController {
         presenter.radioPlayer.play()
         let playerItem = presenter.radioPlayer.currentItem
         playerItem?.addObserver(self, forKeyPath: "timedMetadata", options: NSKeyValueObservingOptions(), context: nil)
-        trackTitleLabel.text = "connecting..."
+        updateMainLabel(trackTitle: "connecting...")
     }
     
     //Pause the playback
@@ -148,7 +151,7 @@ class ViewController: UIViewController {
         interactor.isPlaying.toggle()
         presenter.radioPlayer.pause()
         presenter.radioPlayer.currentItem?.removeObserver(self, forKeyPath: "timedMetadata")
-        trackTitleLabel.text = "Paused..."
+        updateMainLabel(trackTitle: "Paused...")
         radioButton.setImage(presenter.playImage, for: .normal)
         }
     }

@@ -38,5 +38,9 @@ class MainViewPresenter {
     }
     
     
+//    updateLabels(trackTitle: originalFileName)
+    func updateMainLabel2(trackTitle: String) {
+//        updateMainLabel(trackTitle: "название")
+    }
     
 }

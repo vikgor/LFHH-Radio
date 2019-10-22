@@ -13,7 +13,7 @@ import MediaPlayer
 
 class MainViewInteractor {
     
-    let presenter = MainViewPresenter()
+    var presenter = MainViewPresenter()
 //    let mainView = ViewController()
     
     struct CurrentSong {

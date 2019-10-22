@@ -16,27 +16,29 @@ class ViewController: UIViewController {
     @IBOutlet weak var trackTitleLabel: UILabel!
     @IBOutlet weak var mpVolumeHolderView: UIView!
     
-    let interactor = MainViewInteractor()
+    var interactor: MainViewInteractor = MainViewInteractor()
+    var presenter: MainViewPresenter = MainViewPresenter()
     
-
-    //PRESENTER
-    let presenter = MainViewPresenter()
-    var playerItem: AVPlayerItem!
-    //PRESENTER
-    
+    func build() {
+        let interactor = MainViewInteractor()
+        self.interactor = interactor
+        let presenter = MainViewPresenter()
+        interactor.presenter = presenter
+//        presenter.view = self
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        build()
+        
         interactor.startDoingStuff()
+        
         presenter.setupRemoteTransportControls()
-        
-        
         setButtonImage(image: presenter.playImage!)
+        
         changeTrackTitle(title: "Press Play...")
         addVolumeControls()
-        
-        
     }
     
     override func didReceiveMemoryWarning() {
@@ -44,47 +46,52 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    
-    
-    
-    
     // MARK: INTERACTOR
     //Observe - get metadata
+    var playerItem: AVPlayerItem!
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         guard keyPath == "timedMetadata" else { return }
         guard let meta = playerItem.timedMetadata else { return }
         for metadata in meta {
             if let songName = metadata.value(forKey: "value") as? String {
-                print("NEW SONG")
-                print("File name: \(songName)")
+                
                 trackTitleLabel.text = songName
                 
-                // Split artist and track into seperate strings
-                interactor.currentlyPlaying.fileName = songName
-                var stringParts = [String]()
-                if interactor.currentlyPlaying.fileName?.range(of: " - ") != nil {
-                    stringParts = interactor.currentlyPlaying.fileName!.components(separatedBy: " - ")
-                } else {
-                    stringParts = interactor.currentlyPlaying.fileName!.components(separatedBy: "-")
-                }
+                checkIfAlive(songName: songName)
+                splitFileNameIntoArtistAndTrack(songName: songName)
+                setupNowPlaying()
                 
-                if stringParts.count > interactor.numberOfPartsInFileName {
-                    interactor.currentlyPlaying.artist = stringParts[0]
-                    interactor.currentlyPlaying.track = stringParts[1]
-                }
-                
+                print("NEW SONG")
+                print("File name: \(songName)")
                 print("Artist: \(interactor.currentlyPlaying.artist)")
                 print("Track: \(interactor.currentlyPlaying.track)")
                 
-                //See if the radio is online by checking the metadata
-                if songName == "Lavf56.15.102" {
-                    trackTitleLabel.text = "Offline... stay tuned!"
-                    interactor.currentlyPlaying.artist = "LFHH"
-                    interactor.currentlyPlaying.track = "offline..."
-                }
-                
-                setupNowPlaying()
             }
+        }
+    }
+    
+    func splitFileNameIntoArtistAndTrack(songName: String) {
+        // Split artist and track into seperate strings
+        interactor.currentlyPlaying.fileName = songName
+        var stringParts = [String]()
+        if interactor.currentlyPlaying.fileName?.range(of: " - ") != nil {
+            stringParts = interactor.currentlyPlaying.fileName!.components(separatedBy: " - ")
+        } else {
+            stringParts = interactor.currentlyPlaying.fileName!.components(separatedBy: "-")
+        }
+        
+        if stringParts.count > interactor.numberOfPartsInFileName {
+            interactor.currentlyPlaying.artist = stringParts[0]
+            interactor.currentlyPlaying.track = stringParts[1]
+        }
+    }
+    
+    func checkIfAlive(songName: String) {
+        //See if the radio is online by checking the metadata
+        if songName == "Lavf56.15.102" {
+            trackTitleLabel.text = "Offline... stay tuned!"
+            interactor.currentlyPlaying.artist = "LFHH"
+            interactor.currentlyPlaying.track = "offline..."
         }
     }
     

@@ -35,7 +35,8 @@ class MainViewPresenter {
             self.radioPlayer.pause()
             return .success
         }
-       }
+    }
+    
     
     
 }

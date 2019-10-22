@@ -17,14 +17,14 @@ class ViewController: UIViewController {
     @IBOutlet weak var mpVolumeHolderView: UIView!
     
     var interactor: MainViewInteractor = MainViewInteractor()
-    var presenter: MainViewPresenter = MainViewPresenter()
+    var presenter: MainViewPresenter = MainViewPresenter() //This works now, but I won't need this line after I move some functions to the Presenter
     
     func build() {
         let interactor = MainViewInteractor()
         self.interactor = interactor
         let presenter = MainViewPresenter()
         interactor.presenter = presenter
-//        presenter.view = self
+//        presenter.view = self //How do I manage to link VC to Presenter?????
         
     }
     
@@ -56,10 +56,10 @@ class ViewController: UIViewController {
         for metadata in meta {
             if let originalFileName = metadata.value(forKey: "value") as? String {
                 
-                splitFileNameIntoArtistAndTrack(originalFileName: originalFileName)
+                interactor.splitFileNameIntoArtistAndTrack(originalFileName: originalFileName)
                 interactor.setupNowPlaying()
                 
-                print("NEW SONG")
+                print("New song much?")
                 print("File name: \(originalFileName)")
                 print("Artist: \(interactor.currentlyPlaying.artist)")
                 print("Track: \(interactor.currentlyPlaying.track)")
@@ -68,22 +68,6 @@ class ViewController: UIViewController {
                 interactor.checkIfAlive(originalFileName: originalFileName)
 
             }
-        }
-    }
-    
-    func splitFileNameIntoArtistAndTrack(originalFileName: String) {
-        // Split artist and track into seperate strings
-        interactor.currentlyPlaying.fileName = originalFileName
-        var stringParts = [String]()
-        if interactor.currentlyPlaying.fileName?.range(of: " - ") != nil {
-            stringParts = interactor.currentlyPlaying.fileName!.components(separatedBy: " - ")
-        } else {
-            stringParts = interactor.currentlyPlaying.fileName!.components(separatedBy: "-")
-        }
-        
-        if stringParts.count > interactor.numberOfPartsInFileName {
-            interactor.currentlyPlaying.artist = stringParts[0]
-            interactor.currentlyPlaying.track = stringParts[1]
         }
     }
     

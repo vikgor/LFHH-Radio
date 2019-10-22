@@ -1,5 +1,5 @@
 //
-//  MainViewInteractor.swift
+//  MainViewswift
 //  LFHH
 //
 //  Created by Viktor Gordienko on 10/21/19.
@@ -11,21 +11,21 @@ import UIKit
 import AVFoundation
 import MediaPlayer
 
+struct CurrentSong {
+       var fileName : String?
+       var track : String
+       var artist : String
+}
+
 class MainViewInteractor {
     
     var presenter = MainViewPresenter()
     
-    struct CurrentSong {
-           var fileName : String?
-           var track : String
-           var artist : String
-       }
+    let playBackURL = URL(string: "http://62.109.25.83:8000/lofi")
+    //    let playBackURL = URL(string: "http://62.109.25.83:8000/radio")
     
     var currentlyPlaying = CurrentSong(fileName: "", track: "", artist: "")
-    
     var isPlaying = false
-    let playBackURL = URL(string: "http://62.109.25.83:8000/radio")
-//    let playBackURL = URL(string: "http://62.109.25.83:8000/lofi")
     let numberOfPartsInFileName = 1
     let timerObserver = NotificationCenter.default
     
@@ -43,6 +43,22 @@ class MainViewInteractor {
             print(error)
         }
         
+    }
+    
+    func splitFileNameIntoArtistAndTrack(originalFileName: String) {
+        // Split artist and track into seperate strings
+        currentlyPlaying.fileName = originalFileName
+        var stringParts = [String]()
+        if currentlyPlaying.fileName?.range(of: " - ") != nil {
+            stringParts = currentlyPlaying.fileName!.components(separatedBy: " - ")
+        } else {
+            stringParts = currentlyPlaying.fileName!.components(separatedBy: "-")
+        }
+        
+        if stringParts.count > numberOfPartsInFileName {
+            currentlyPlaying.artist = stringParts[0]
+            currentlyPlaying.track = stringParts[1]
+        }
     }
     
     func checkIfAlive(originalFileName: String) {
@@ -69,21 +85,4 @@ class MainViewInteractor {
         ]
     }
     
-    // MARK: Use cases
-
-    
-    
-    
-    
 }
-
-
-/*
- 
- -[] Get metadata
- -[] Break the file name apart into "Artist - Track"
- -[] Send the Artis-Track to Presenter (???)
- 
- -[]
-
-*/

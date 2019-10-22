@@ -29,33 +29,19 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         interactor.startDoingStuff()
-        
         presenter.setupRemoteTransportControls()
         
         
-        radioButton.setImage(presenter.playImage, for: .normal)
-        
+        setButtonImage(image: presenter.playImage!)
         changeTrackTitle(title: "Press Play...")
+        addVolumeControls()
         
-        
-        
-        
-        // MPVolumeView (This adds volume control to the Main View)
-        mpVolumeHolderView.backgroundColor = .clear
-        let mpVolume = MPVolumeView(frame: mpVolumeHolderView.bounds)
-        mpVolume.showsRouteButton = true
-        mpVolumeHolderView.addSubview(mpVolume)
-        view.addSubview(mpVolumeHolderView)
         
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-    
-    func changeTrackTitle(title: String) {
-        trackTitleLabel.text = title
     }
     
     
@@ -120,6 +106,23 @@ class ViewController: UIViewController {
     
     
    // MARK: PRESENTER
+    func changeTrackTitle(title: String) {
+        trackTitleLabel.text = title
+    }
+    
+    func setButtonImage(image: UIImage) {
+        radioButton.setImage(image, for: .normal)
+    }
+    
+    func addVolumeControls() {
+        // MPVolumeView (This adds volume control to the Main View)
+        mpVolumeHolderView.backgroundColor = .clear
+        let mpVolume = MPVolumeView(frame: mpVolumeHolderView.bounds)
+        mpVolume.showsRouteButton = true
+        mpVolumeHolderView.addSubview(mpVolume)
+        view.addSubview(mpVolumeHolderView)
+    }
+    
     
     func resumePlayback() {
         interactor.isPlaying.toggle()

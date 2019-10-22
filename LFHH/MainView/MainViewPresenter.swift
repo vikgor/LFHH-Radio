@@ -7,8 +7,6 @@
 //
 
 import Foundation
-//import UIKit
-//import AVFoundation
 import MediaPlayer
 
 class MainViewPresenter {
@@ -24,19 +22,20 @@ class MainViewPresenter {
     
     
     func setupRemoteTransportControls() {
-           // Get the shared MPRemoteCommandCenter
-           let commandCenter = MPRemoteCommandCenter.shared()
-           // Add handler for Play Command
-           commandCenter.playCommand.addTarget { [unowned self] event in
-               self.radioPlayer.play()
-               return .success
-           }
+        // Get the shared MPRemoteCommandCenter
+        let commandCenter = MPRemoteCommandCenter.shared()
+        // Add handler for Play Command
+        commandCenter.playCommand.addTarget { [unowned self] event in
+            self.radioPlayer.play()
+            return .success
+        }
            
-           // Add handler for Pause Command
-           commandCenter.pauseCommand.addTarget { [unowned self] event in
-               self.radioPlayer.pause()
-               return .success
-           }
+        // Add handler for Pause Command
+        commandCenter.pauseCommand.addTarget { [unowned self] event in
+            self.radioPlayer.pause()
+            return .success
+        }
        }
+    
     
 }

@@ -67,7 +67,9 @@ class MainViewInteractor {
             currentlyPlaying.artist = "LFHH"
             currentlyPlaying.track = "offline..."
             
-            presenter.updateMainLabel2(trackTitle: "Offline... stay tuned!")
+            
+            //I doubt this works yet, better check in the future
+            presenter.updateMainLabelFromPresenter(trackTitle: "Offline... stay tuned!")
         }
     }
     

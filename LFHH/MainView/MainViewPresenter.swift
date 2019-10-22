@@ -11,14 +11,19 @@ import MediaPlayer
 
 class MainViewPresenter {
     
+    var viewController: ViewController?
+    
     var radioPlayer = AVPlayer()
     var playImage = UIImage(named: "play-button-white")
     var pauseImage = UIImage(named: "pause-button-white")
     
     func startDoingStuff() {
-        //NOTHING HERE JUST YET
-        //NOTHING HERE JUST YET
-        //NOTHING HERE JUST YET
+        //FIX THIS
+        updateMainLabelFromPresenter(trackTitle: "Text from Presenter")
+//        viewController?.updateMainLabel(trackTitle: "Maybe this??")
+        
+        
+        setupRemoteTransportControls()
     }
     
     
@@ -39,9 +44,8 @@ class MainViewPresenter {
     }
     
     
-    func updateMainLabel2(trackTitle: String) {
-//        updateMainLabel(trackTitle: "Offline... stay tuned!")
-        print("updateMainLabel2 is called and is doing alright")
+    func updateMainLabelFromPresenter(trackTitle: String) {
+        viewController?.updateMainLabel(trackTitle: trackTitle)
         
     }
     

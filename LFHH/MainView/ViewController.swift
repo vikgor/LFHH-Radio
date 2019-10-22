@@ -25,6 +25,7 @@ class ViewController: UIViewController {
         let presenter = MainViewPresenter()
         interactor.presenter = presenter
 //        presenter.view = self
+        
     }
     
     override func viewDidLoad() {
@@ -56,7 +57,7 @@ class ViewController: UIViewController {
             if let originalFileName = metadata.value(forKey: "value") as? String {
                 
                 splitFileNameIntoArtistAndTrack(originalFileName: originalFileName)
-                setupNowPlaying()
+                interactor.setupNowPlaying()
                 
                 print("NEW SONG")
                 print("File name: \(originalFileName)")
@@ -64,7 +65,7 @@ class ViewController: UIViewController {
                 print("Track: \(interactor.currentlyPlaying.track)")
                 
                 updateMainLabel(trackTitle: originalFileName)
-                checkIfAlive(originalFileName: originalFileName)
+                interactor.checkIfAlive(originalFileName: originalFileName)
 
             }
         }
@@ -86,29 +87,6 @@ class ViewController: UIViewController {
         }
     }
     
-    func checkIfAlive(originalFileName: String) {
-        //See if the radio is online by checking the metadata
-        if (originalFileName == ("Lavf56.15.102") || originalFileName == ("B4A7D6322MH1376302278118826")) {
-            interactor.currentlyPlaying.artist = "LFHH"
-            interactor.currentlyPlaying.track = "offline..."
-            
-            updateMainLabel(trackTitle: "Offline... stay tuned!")
-        }
-    }
-    
-    func setupNowPlaying() {
-        let image = UIImage(named: "lofinight")!
-        let albumArt = MPMediaItemArtwork.init(boundsSize: image.size, requestHandler: { (size) -> UIImage in
-            return image
-        })
-        
-        MPNowPlayingInfoCenter.default().nowPlayingInfo = [
-            MPNowPlayingInfoPropertyIsLiveStream: true,
-            MPMediaItemPropertyArtist: interactor.currentlyPlaying.artist,
-            MPMediaItemPropertyTitle: interactor.currentlyPlaying.track,
-            MPMediaItemPropertyArtwork: albumArt
-        ]
-    }
     // MARK: INTERACTOR ends here
     
     func updateMainLabel(trackTitle: String) {

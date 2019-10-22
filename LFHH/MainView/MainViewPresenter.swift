@@ -12,12 +12,13 @@ import MediaPlayer
 class MainViewPresenter {
     
     var radioPlayer = AVPlayer()
-//    var playerItem: AVPlayerItem!
     var playImage = UIImage(named: "play-button-white")
     var pauseImage = UIImage(named: "pause-button-white")
     
     func startDoingStuff() {
-        
+        //NOTHING HERE JUST YET
+        //NOTHING HERE JUST YET
+        //NOTHING HERE JUST YET
     }
     
     
@@ -38,9 +39,10 @@ class MainViewPresenter {
     }
     
     
-//    updateLabels(trackTitle: originalFileName)
     func updateMainLabel2(trackTitle: String) {
-//        updateMainLabel(trackTitle: "название")
+//        updateMainLabel(trackTitle: "Offline... stay tuned!")
+        print("updateMainLabel2 is called and is doing alright")
+        
     }
     
 }

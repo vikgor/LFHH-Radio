@@ -14,7 +14,6 @@ import MediaPlayer
 class MainViewInteractor {
     
     var presenter = MainViewPresenter()
-//    let mainView = ViewController()
     
     struct CurrentSong {
            var fileName : String?
@@ -25,7 +24,8 @@ class MainViewInteractor {
     var currentlyPlaying = CurrentSong(fileName: "", track: "", artist: "")
     
     var isPlaying = false
-    let playBackURL = URL(string: "http://62.109.25.83:8000/lofi")
+    let playBackURL = URL(string: "http://62.109.25.83:8000/radio")
+//    let playBackURL = URL(string: "http://62.109.25.83:8000/lofi")
     let numberOfPartsInFileName = 1
     let timerObserver = NotificationCenter.default
     
@@ -45,8 +45,29 @@ class MainViewInteractor {
         
     }
     
+    func checkIfAlive(originalFileName: String) {
+        //See if the radio is online by checking the metadata
+        if (originalFileName == ("Lavf56.15.102") || originalFileName == ("B4A7D6322MH1376302278118826")) {
+            currentlyPlaying.artist = "LFHH"
+            currentlyPlaying.track = "offline..."
+            
+            presenter.updateMainLabel2(trackTitle: "Offline... stay tuned!")
+        }
+    }
     
-    
+    func setupNowPlaying() {
+        let image = UIImage(named: "lofinight")!
+        let albumArt = MPMediaItemArtwork.init(boundsSize: image.size, requestHandler: { (size) -> UIImage in
+            return image
+        })
+        
+        MPNowPlayingInfoCenter.default().nowPlayingInfo = [
+            MPNowPlayingInfoPropertyIsLiveStream: true,
+            MPMediaItemPropertyArtist: currentlyPlaying.artist,
+            MPMediaItemPropertyTitle: currentlyPlaying.track,
+            MPMediaItemPropertyArtwork: albumArt
+        ]
+    }
     
     // MARK: Use cases
 

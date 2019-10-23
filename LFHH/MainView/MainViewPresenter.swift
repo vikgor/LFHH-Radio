@@ -12,6 +12,12 @@ import MediaPlayer
 class MainViewPresenter {
     
     var viewController: ViewController?
+//    var viewController = ViewController()
+//    {
+//        didSet {
+//            viewController?.trackTitleLabel.text = "Test 1"
+//        }
+//    }
     
     var radioPlayer = AVPlayer()
     var playImage = UIImage(named: "play-button-white")
@@ -19,9 +25,7 @@ class MainViewPresenter {
     
     func startDoingStuff() {
         //FIX THIS
-        updateMainLabelFromPresenter(trackTitle: "Text from Presenter")
-//        viewController?.updateMainLabel(trackTitle: "Maybe this??")
-        
+        updateMainLabelFromPresenter(trackTitle: "Press Play...")
         
         setupRemoteTransportControls()
     }
@@ -46,7 +50,10 @@ class MainViewPresenter {
     
     func updateMainLabelFromPresenter(trackTitle: String) {
         viewController?.updateMainLabel(trackTitle: trackTitle)
-        
+    }
+    
+    func setButtonImageFromPresenter(image: UIImage) {
+        viewController?.setButtonImage(image: image)
     }
     
 }

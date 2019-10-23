@@ -21,7 +21,8 @@ class MainViewInteractor {
     
     var presenter = MainViewPresenter()
     
-    let playBackURL = URL(string: "http://62.109.25.83:8000/lofi")
+    let playBackURL = URL(string: "https://vivalaresistance.ru/streamlofi")
+//    let playBackURL = URL(string: "http://62.109.25.83:8000/lofi")
     //    let playBackURL = URL(string: "http://62.109.25.83:8000/radio")
     
     var currentlyPlaying = CurrentSong(fileName: "", track: "", artist: "")
@@ -30,10 +31,12 @@ class MainViewInteractor {
     let timerObserver = NotificationCenter.default
     
     func startDoingStuff() {
-        
-        timerObserver.addObserver(self, selector: #selector(ViewController.pausePlayback), name: Notification.Name("PauseMusic"), object: nil)
-        
-        //Make audio work in background
+        makeAudioWorkInBackground()
+        timerObserver.addObserver(self, selector: #selector(pausePlayback), name: Notification.Name("PauseMusic"), object: nil)
+        presenter.startDoingStuff()
+    }
+    
+    func makeAudioWorkInBackground() {
         do {
             try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: [.allowAirPlay])
             print("Playback OK")
@@ -42,7 +45,6 @@ class MainViewInteractor {
         } catch {
             print(error)
         }
-        
     }
     
     func splitFileNameIntoArtistAndTrack(originalFileName: String) {
@@ -85,6 +87,54 @@ class MainViewInteractor {
             MPMediaItemPropertyTitle: currentlyPlaying.track,
             MPMediaItemPropertyArtwork: albumArt
         ]
+    }
+    
+    
+    //Observe - get metadata
+    var playerItem: AVPlayerItem!
+    
+    func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        guard keyPath == "timedMetadata" else { return }
+        guard let meta = playerItem.timedMetadata else { return }
+        for metadata in meta {
+            if let originalFileName = metadata.value(forKey: "value") as? String {
+                print(originalFileName)
+                splitFileNameIntoArtistAndTrack(originalFileName: originalFileName)
+                setupNowPlaying()
+                presenter.updateMainLabelFromPresenter(trackTitle: originalFileName)
+                checkIfAlive(originalFileName: originalFileName)
+                print("New song much?\nFile name: \(originalFileName)\nArtist: \(currentlyPlaying.artist)\nTrack: \(currentlyPlaying.track)")
+            }
+        }
+    }
+    //Resume the playback
+    func resumePlayback() {
+        isPlaying.toggle()
+        playerItem = AVPlayerItem(url: playBackURL!)
+        presenter.radioPlayer = AVPlayer(playerItem: playerItem)
+        presenter.radioPlayer.play()
+        presenter.setButtonImageFromPresenter(image: presenter.pauseImage!)
+        presenter.updateMainLabelFromPresenter(trackTitle: "connecting...")
+        print("It's playing")
+        
+        
+        //Oberver doesn't work yet!!!
+        let playerItem = presenter.radioPlayer.currentItem
+        playerItem?.addObserver(presenter.viewController!, forKeyPath: "timedMetadata", options: NSKeyValueObservingOptions(), context: nil)
+        
+    }
+    //Pause the playback
+    @objc func pausePlayback() {
+        if isPlaying == true {
+        isPlaying.toggle()
+        presenter.radioPlayer.pause()
+        presenter.setButtonImageFromPresenter(image: presenter.playImage!)
+        presenter.updateMainLabelFromPresenter(trackTitle: "Paused...")
+        print("It's NOT playing")
+            
+        //Oberver doesn't work yet!!!
+        presenter.radioPlayer.currentItem?.removeObserver(presenter.viewController!, forKeyPath: "timedMetadata")
+        }
     }
     
 }

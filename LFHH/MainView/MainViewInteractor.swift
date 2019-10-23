@@ -20,15 +20,13 @@ struct CurrentSong {
 class MainViewInteractor {
     
     var presenter = MainViewPresenter()
-    
-    let playBackURL = URL(string: "https://vivalaresistance.ru/streamlofi")
-//    let playBackURL = URL(string: "http://62.109.25.83:8000/lofi")
-    //    let playBackURL = URL(string: "http://62.109.25.83:8000/radio")
-    
     var currentlyPlaying = CurrentSong(fileName: "", track: "", artist: "")
     var isPlaying = false
     let numberOfPartsInFileName = 1
     let timerObserver = NotificationCenter.default
+    let playBackURL = URL(string: "https://vivalaresistance.ru/streamlofi")
+    //    let playBackURL = URL(string: "http://62.109.25.83:8000/lofi")
+    //    let playBackURL = URL(string: "http://62.109.25.83:8000/radio")
     
     func startDoingStuff() {
         makeAudioWorkInBackground()
@@ -48,7 +46,6 @@ class MainViewInteractor {
     }
     
     func splitFileNameIntoArtistAndTrack(originalFileName: String) {
-        // Split artist and track into seperate strings
         currentlyPlaying.fileName = originalFileName
         var stringParts = [String]()
         if currentlyPlaying.fileName?.range(of: " - ") != nil {
@@ -69,8 +66,7 @@ class MainViewInteractor {
             currentlyPlaying.artist = "LFHH"
             currentlyPlaying.track = "offline..."
             
-            
-            //I doubt this works yet, better check in the future
+            // MARK: Don't forget to check this:
             presenter.updateMainLabelFromPresenter(trackTitle: "Offline... stay tuned!")
         }
     }
@@ -80,7 +76,6 @@ class MainViewInteractor {
         let albumArt = MPMediaItemArtwork.init(boundsSize: image.size, requestHandler: { (size) -> UIImage in
             return image
         })
-        
         MPNowPlayingInfoCenter.default().nowPlayingInfo = [
             MPNowPlayingInfoPropertyIsLiveStream: true,
             MPMediaItemPropertyArtist: currentlyPlaying.artist,

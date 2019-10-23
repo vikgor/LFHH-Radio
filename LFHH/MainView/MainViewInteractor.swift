@@ -85,6 +85,7 @@ class MainViewInteractor {
     }
     
     
+    // MARK: Fix observer
     //Observe - get metadata
     var playerItem: AVPlayerItem!
     
@@ -112,10 +113,9 @@ class MainViewInteractor {
         presenter.updateMainLabelFromPresenter(trackTitle: "connecting...")
         print("It's playing")
         
-        
         //Oberver doesn't work yet!!!
         let playerItem = presenter.radioPlayer.currentItem
-        playerItem?.addObserver(presenter.viewController!, forKeyPath: "timedMetadata", options: NSKeyValueObservingOptions(), context: nil)
+//        playerItem?.addObserver(presenter.viewController!, forKeyPath: "timedMetadata", options: NSKeyValueObservingOptions(), context: nil)
         
     }
     //Pause the playback
@@ -126,9 +126,9 @@ class MainViewInteractor {
         presenter.setButtonImageFromPresenter(image: presenter.playImage!)
         presenter.updateMainLabelFromPresenter(trackTitle: "Paused...")
         print("It's NOT playing")
-            
+        
         //Oberver doesn't work yet!!!
-        presenter.radioPlayer.currentItem?.removeObserver(presenter.viewController!, forKeyPath: "timedMetadata")
+//        presenter.radioPlayer.currentItem?.removeObserver(presenter.viewController!, forKeyPath: "timedMetadata")
         }
     }
     

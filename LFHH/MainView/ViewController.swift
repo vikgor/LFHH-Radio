@@ -16,7 +16,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var trackTitleLabel: UILabel!
     @IBOutlet weak var mpVolumeHolderView: UIView!
     
-    var interactor: MainViewInteractor = MainViewInteractor()
+    var interactor: MainViewInteractor?
     
     func setup() {
         let interactor = MainViewInteractor()
@@ -29,13 +29,12 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
-        interactor.startDoingStuff()
+        interactor?.startDoingStuff()
         addVolumeControls()
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     func addVolumeControls() {
@@ -55,11 +54,11 @@ class ViewController: UIViewController {
     }
     
     @IBAction func playRadio(_ sender: UIButton) {
-        switch interactor.isPlaying {
+        switch interactor?.isPlaying {
         case false:
-            interactor.resumePlayback()
+            interactor?.resumePlayback()
         default:
-            interactor.pausePlayback()
+            interactor?.pausePlayback()
         }
     }
     

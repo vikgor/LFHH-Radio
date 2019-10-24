@@ -17,18 +17,20 @@ struct CurrentSong {
        var artist : String
 }
 
-class MainViewInteractor {
+class MainViewInteractor: NSObject {
     
     var presenter = MainViewPresenter()
     var currentlyPlaying = CurrentSong(fileName: "", track: "", artist: "")
 //    var currentlyPlaying: CurrentSong?
-//    I decided to go with empty variable instead because that way I won't get a warning: Expression implicitly coerced from 'String?' to 'Any'
     
+    var playerItem: AVPlayerItem!
     var isPlaying = false
     let numberOfPartsInFileName = 1
     let timerObserver = NotificationCenter.default
     let playBackURL = URL(string: "https://vivalaresistance.ru/streamlofi")
-    //    let playBackURL = URL(string: "http://62.109.25.83:8000/radio")
+//    let playBackURL = URL(string: "http://62.109.25.83:8000/radio")   //checking offline mode
+//    let playBackURL = URL(string: "https://nashe1.hostingradio.ru:80/nashe-64.mp3")   //this link usually works
+    
     
     func startDoingStuff() {
         makeAudioWorkInBackground()
@@ -69,13 +71,11 @@ class MainViewInteractor {
         //See if the radio is online by checking the metadata
         if (originalFileName == ("Lavf56.15.102") || originalFileName == ("B4A7D6322MH1376302278118826")) {
             currentlyPlaying = CurrentSong(fileName: "Offline... stay tuned!", track: "offline...", artist: "LFHH")
-//            currentlyPlaying?.artist = "LFHH"
-//            currentlyPlaying?.track = "offline..."
-//            presenter.updateMainLabelFromPresenter(trackTitle: "Offline... stay tuned!")
+            presenter.updateMainLabelFromPresenter(trackTitle: "Offline... stay tuned!")
         }
     }
     
-    func setupNowPlaying() {
+    func setupInfoCenter() {
         let image = UIImage(named: "lofinight")!
         let albumArt = MPMediaItemArtwork.init(boundsSize: image.size, requestHandler: { (size) -> UIImage in
             return image
@@ -88,44 +88,37 @@ class MainViewInteractor {
         ]
     }
     
+    //Observe - get metadata from the audio stream
     
-    // MARK: Fix observer
-    //Observe - get metadata
-    var playerItem: AVPlayerItem!
-    
-    func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         guard keyPath == "timedMetadata" else { return }
         guard let meta = playerItem.timedMetadata else { return }
         for metadata in meta {
             if let originalFileName = metadata.value(forKey: "value") as? String {
                 print(originalFileName)
                 splitFileNameIntoArtistAndTrack(string: originalFileName)
-                setupNowPlaying()
+                setupInfoCenter()
                 presenter.updateMainLabelFromPresenter(trackTitle: makeFullSongName(source: currentlyPlaying))
                 checkIfAlive(originalFileName: originalFileName)
                 print("New song much?\nFile name: \(originalFileName)\nArtist: \(currentlyPlaying.artist)\nTrack: \(currentlyPlaying.track)")
             }
         }
     }
-    //Resume the playback
+    
     func resumePlayback() {
         isPlaying.toggle()
         playerItem = AVPlayerItem(url: playBackURL!)
         presenter.resumePlayback(playerItem: playerItem)
-        
-        //Oberver doesn't work yet!!!
-//        let playerItem = presenter.radioPlayer.currentItem
-//        playerItem?.addObserver(presenter.viewController!, forKeyPath: "timedMetadata", options: NSKeyValueObservingOptions(), context: nil)
+        let playerItem = presenter.radioPlayer.currentItem
+        playerItem?.addObserver(self, forKeyPath: "timedMetadata", options: NSKeyValueObservingOptions(), context: nil)
         
     }
-    //Pause the playback
+    
     @objc func pausePlayback() {
         if isPlaying == true {
             isPlaying.toggle()
             presenter.pausePlayback()
-        
-        //Oberver doesn't work yet!!!
-//        presenter.radioPlayer.currentItem?.removeObserver(presenter.viewController!, forKeyPath: "timedMetadata")
+            presenter.radioPlayer.currentItem?.removeObserver(self, forKeyPath: "timedMetadata")
         }
     }
     

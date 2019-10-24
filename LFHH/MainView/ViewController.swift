@@ -22,7 +22,9 @@ class ViewController: UIViewController {
     
     
     /**
-    Call this function to grok some globs.
+     Setting up the VIP cycle
+     # The VIP cycle:
+     ViewController -> Interactor -> Presenter -> ViewController
     */
     func setup() {
         let interactor = MainViewInteractor()

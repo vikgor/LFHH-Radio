@@ -42,4 +42,19 @@ class MainViewPresenter {
         viewController?.setButtonImage(image: image)
     }
     
+    func resumePlayback(playerItem: AVPlayerItem) {
+        radioPlayer = AVPlayer(playerItem: playerItem)
+        radioPlayer.play()
+        setButtonImageFromPresenter(image: pauseImage!)
+        updateMainLabelFromPresenter(trackTitle: "connecting...")
+        print("It's playing")
+    }
+    
+    func pausePlayback() {
+        radioPlayer.pause()
+        setButtonImageFromPresenter(image: playImage!)
+        updateMainLabelFromPresenter(trackTitle: "Paused...")
+        print("It's NOT playing")
+    }
+    
 }

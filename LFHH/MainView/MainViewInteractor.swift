@@ -21,11 +21,13 @@ class MainViewInteractor {
     
     var presenter = MainViewPresenter()
     var currentlyPlaying = CurrentSong(fileName: "", track: "", artist: "")
+//    var currentlyPlaying: CurrentSong?
+//    I decided to go with empty variable instead because that way I won't get a warning: Expression implicitly coerced from 'String?' to 'Any'
+    
     var isPlaying = false
     let numberOfPartsInFileName = 1
     let timerObserver = NotificationCenter.default
     let playBackURL = URL(string: "https://vivalaresistance.ru/streamlofi")
-    //    let playBackURL = URL(string: "http://62.109.25.83:8000/lofi")
     //    let playBackURL = URL(string: "http://62.109.25.83:8000/radio")
     
     func startDoingStuff() {
@@ -45,29 +47,31 @@ class MainViewInteractor {
         }
     }
     
-    func splitFileNameIntoArtistAndTrack(originalFileName: String) {
-        currentlyPlaying.fileName = originalFileName
+    func makeFullSongName(source: CurrentSong) -> String{
+         return "\(source.artist) - \(source.track)"
+    }
+    
+    func splitFileNameIntoArtistAndTrack(string: String) {
         var stringParts = [String]()
-        if currentlyPlaying.fileName?.range(of: " - ") != nil {
-            stringParts = currentlyPlaying.fileName!.components(separatedBy: " - ")
+        if string.range(of: " - ") != nil {
+            stringParts = string.components(separatedBy: " - ")
         } else {
-            stringParts = currentlyPlaying.fileName!.components(separatedBy: "-")
+            stringParts = string.components(separatedBy: "-")
         }
         
         if stringParts.count > numberOfPartsInFileName {
-            currentlyPlaying.artist = stringParts[0]
-            currentlyPlaying.track = stringParts[1]
+            currentlyPlaying = CurrentSong(track: stringParts[1], artist: stringParts[0])
         }
     }
-    
+
+    // MARK: Don't forget to check offline mode:
     func checkIfAlive(originalFileName: String) {
         //See if the radio is online by checking the metadata
         if (originalFileName == ("Lavf56.15.102") || originalFileName == ("B4A7D6322MH1376302278118826")) {
-            currentlyPlaying.artist = "LFHH"
-            currentlyPlaying.track = "offline..."
-            
-            // MARK: Don't forget to check this:
-            presenter.updateMainLabelFromPresenter(trackTitle: "Offline... stay tuned!")
+            currentlyPlaying = CurrentSong(fileName: "Offline... stay tuned!", track: "offline...", artist: "LFHH")
+//            currentlyPlaying?.artist = "LFHH"
+//            currentlyPlaying?.track = "offline..."
+//            presenter.updateMainLabelFromPresenter(trackTitle: "Offline... stay tuned!")
         }
     }
     
@@ -95,9 +99,9 @@ class MainViewInteractor {
         for metadata in meta {
             if let originalFileName = metadata.value(forKey: "value") as? String {
                 print(originalFileName)
-                splitFileNameIntoArtistAndTrack(originalFileName: originalFileName)
+                splitFileNameIntoArtistAndTrack(string: originalFileName)
                 setupNowPlaying()
-                presenter.updateMainLabelFromPresenter(trackTitle: originalFileName)
+                presenter.updateMainLabelFromPresenter(trackTitle: makeFullSongName(source: currentlyPlaying))
                 checkIfAlive(originalFileName: originalFileName)
                 print("New song much?\nFile name: \(originalFileName)\nArtist: \(currentlyPlaying.artist)\nTrack: \(currentlyPlaying.track)")
             }
@@ -107,25 +111,18 @@ class MainViewInteractor {
     func resumePlayback() {
         isPlaying.toggle()
         playerItem = AVPlayerItem(url: playBackURL!)
-        presenter.radioPlayer = AVPlayer(playerItem: playerItem)
-        presenter.radioPlayer.play()
-        presenter.setButtonImageFromPresenter(image: presenter.pauseImage!)
-        presenter.updateMainLabelFromPresenter(trackTitle: "connecting...")
-        print("It's playing")
+        presenter.resumePlayback(playerItem: playerItem)
         
         //Oberver doesn't work yet!!!
-        let playerItem = presenter.radioPlayer.currentItem
+//        let playerItem = presenter.radioPlayer.currentItem
 //        playerItem?.addObserver(presenter.viewController!, forKeyPath: "timedMetadata", options: NSKeyValueObservingOptions(), context: nil)
         
     }
     //Pause the playback
     @objc func pausePlayback() {
         if isPlaying == true {
-        isPlaying.toggle()
-        presenter.radioPlayer.pause()
-        presenter.setButtonImageFromPresenter(image: presenter.playImage!)
-        presenter.updateMainLabelFromPresenter(trackTitle: "Paused...")
-        print("It's NOT playing")
+            isPlaying.toggle()
+            presenter.pausePlayback()
         
         //Oberver doesn't work yet!!!
 //        presenter.radioPlayer.currentItem?.removeObserver(presenter.viewController!, forKeyPath: "timedMetadata")

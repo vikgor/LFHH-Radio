@@ -18,6 +18,12 @@ class ViewController: UIViewController {
     
     var interactor: MainViewInteractor?
     
+    
+    
+    
+    /**
+    Call this function to grok some globs.
+    */
     func setup() {
         let interactor = MainViewInteractor()
         self.interactor = interactor

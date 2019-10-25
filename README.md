@@ -16,7 +16,8 @@
     - [x] Stop audio on button press from another VC [link](http://www.systeen.com/2016/12/02/stop-audio-player-another-view-controller-using-notificationcenter-swift-3/)
     - [x] Fix crash on sleep timer pausing the unplaying audio
     - [x] Set up time with Picker View
-    - [ ] Show countdown timer or any other indication of a timer turned on
+    - [x] Show countdown timer or any other indication of a timer turned on
+    - [ ] Be able to set up a new timer after one is finished
     - [ ] Check if timer is currently on, reset it on a new start
 - [ ] Resume audio after interruption
 - [ ] alarm
@@ -24,3 +25,7 @@
 - [ ] battery drain problem?
 - [ ] add views/buttons (my contacts, song history, save current song option, other links and stuff)
 - [ ] Design
+- [ ] Code refactoring
+    - [ ] Main View
+    - [ ] Timer
+    - [ ] Playlist

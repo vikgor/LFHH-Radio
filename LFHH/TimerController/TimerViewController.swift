@@ -35,35 +35,23 @@ class TimerViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
         setTimerButtonTitle(string: "Chill...")
     }
     
-    
-//    var pickerData = ["1 minute", "5 minutes", "10 minutes", "15 minutes", "30 minutes", "45 minutes", "1 hour"]
-//    var pickerMinutes: [Int] = [60, 300, 600, 900, 1800, 2400, 3600] //In seconds for testing, change this later
-//    var pickerSeconds = 60
+    // MARK: Меня смущает только 4кратный force unwrapping, может перекинуть сюда pickerData и pickerMintes?
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-//        return pickerData.count
         return interactor!.pickerData.count
     }
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-//        return String(pickerData[row])
         return String(interactor!.pickerData[row])
     }
     func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
-//        return NSAttributedString(string: String(pickerData[row]), attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
         return NSAttributedString(string: String(interactor!.pickerData[row]), attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
     }
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-//        pickerSeconds = pickerMinutes[row]
         interactor!.pickerSeconds = interactor!.pickerMinutes[row]
     }
-    
-    //Меня смущает только 4кратный force unwrapping
-    
-    
-    
     
     func setTimerLabelText(string: String) {
         labelTimer.text = string
@@ -72,5 +60,54 @@ class TimerViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
         timerButton.setTitle(string, for: .normal)
     }
     
+    
+    
+//    // MARK: This is what it looked like before:
+//    var pickerData = ["1 minute", "5 minutes", "10 minutes", "15 minutes", "30 minutes", "45 minutes", "1 hour"]
+//    var pickerMinutes: [Int] = [60, 300, 600, 900, 1800, 2400, 3600] //In seconds for testing, change this later
+//    var pickerSeconds = 60
+//    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+//            return 1
+//    }
+//    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+//        return pickerData.count
+//    }
+//    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+//        return String(pickerData[row])
+//    }
+//    func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
+//        return NSAttributedString(string: String(pickerData[row]), attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
+//    }
+//    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+//        pickerSeconds = pickerMinutes[row]
+//    }
+    
+    
+    
+//    // MARK: We can also switch from 2 arrays to a dictionary:
+//    var pickerData: [String : Int] = [
+//        "1 minute": 60,
+//        "5 minutes": 300,
+//        "10 minutes": 600,
+//        "15 minutes": 900,
+//        "30 minutes": 1800,
+//        "45 minutes": 2400,
+//        "1 hour": 3600,
+//    ]
+//    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+//        return 1
+//    }
+//    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+//        return pickerData.count
+//    }
+//    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+//        return String(pickerData[row])
+//    }
+//    func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
+//        return NSAttributedString(string: String(pickerData[row]), attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
+//    }
+//    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+//        pickerSeconds = pickerMinutes[row]
+//    }
     
 }

@@ -12,6 +12,8 @@ class TimerInteractor {
     
     var presenter = TimerPresenter()
     
+    
+    
     var pickerData = ["1 minute", "5 minutes", "10 minutes", "15 minutes", "30 minutes", "45 minutes", "1 hour",]
     var pickerMinutes: [Int] = [60, 300, 600, 900, 1800, 2400, 3600] //In seconds for testing, change this later
     var pickerSeconds = 60

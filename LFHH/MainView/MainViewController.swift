@@ -10,7 +10,7 @@ import UIKit
 import AVFoundation
 import MediaPlayer
 
-class ViewController: UIViewController {
+class MainViewController: UIViewController {
 
     @IBOutlet weak var radioButton: UIButton!
     @IBOutlet weak var trackTitleLabel: UILabel!
@@ -24,7 +24,7 @@ class ViewController: UIViewController {
     /**
      Setting up the VIP cycle
      # The VIP cycle:
-     ViewController -> Interactor -> Presenter -> ViewController
+     MainViewController -> Interactor -> Presenter -> ViewController
     */
     func setup() {
         let interactor = MainViewInteractor()

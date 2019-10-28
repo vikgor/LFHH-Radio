@@ -20,7 +20,7 @@ class TimerPresenter {
         viewController?.setTimerButtonTitle(string: string)
     }
     
-    func pickerUserInteractionSwitcher() {
+    func switchPickerInteraction() {
         viewController?.sleepTimerMinutes.isUserInteractionEnabled.toggle()
     }
     

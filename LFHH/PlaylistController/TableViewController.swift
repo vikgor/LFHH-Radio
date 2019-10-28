@@ -10,23 +10,37 @@ import UIKit
 
 class TableViewController: UITableViewController {
     
+    var interactor: PlaylistInteractor?
+        
+    func setup() {
+        let interactor = PlaylistInteractor()
+        self.interactor = interactor
+        let presenter = PlaylistPresenter()
+        interactor.presenter = presenter
+        presenter.viewController = self
+    }
+    
 //    let myURLString = "https://8137147.xyz/1/playlist/playlist.php"
     let myURLString = "https://vivalaresistance.ru/lfhh/lfhhhistory.php"
     let screenSize: CGRect = UIScreen.main.bounds
-    var historyArray: [String.SubSequence]? {
-        didSet {
-            tableView.reloadData()
-        }
-    }
+    var historyArray: [String.SubSequence]?
+    //    var historyArray: [String.SubSequence]? {
+    //        didSet {
+    //            tableView.reloadData()
+    //        }
+    //    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.rowHeight = screenSize.height * 0.09 //Make the 10 rows fill the entire screen
         self.refreshControl?.addTarget(self, action: #selector(refresh), for: UIControl.Event.valueChanged)
-        getRadioHistory()
+        interactor?.startDoingStuff()
+        getRadioPlaylist()
     }
     
-    func getRadioHistory() {
+    
+    // interactor
+    func getRadioPlaylist() {
         guard let myURL = NSURL(string: myURLString) else {
             print("Error: \(myURLString) doesn't seem to be a valid URL")
             return
@@ -39,16 +53,17 @@ class TableViewController: UITableViewController {
         }
     }
     
+    // presenter
     @objc func refresh(sender:AnyObject)
     {
-        getRadioHistory()
+        getRadioPlaylist()
         self.tableView.reloadData()
         self.refreshControl?.endRefreshing()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         print("Getting updated playlist...")
-        getRadioHistory()
+        getRadioPlaylist()
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {

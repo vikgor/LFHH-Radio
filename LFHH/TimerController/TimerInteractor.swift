@@ -12,10 +12,8 @@ class TimerInteractor {
     
     var presenter = TimerPresenter()
     
-    
-    
     var pickerData = ["1 minute", "5 minutes", "10 minutes", "15 minutes", "30 minutes", "45 minutes", "1 hour",]
-    var pickerMinutes: [Int] = [60, 300, 600, 900, 1800, 2400, 3600] //In seconds for testing, change this later
+    var pickerMinutes: [Int] = [60, 300, 600, 900, 1800, 2400, 3600]
     var pickerSeconds = 60
     var timer = Timer()
     var sleepTimerIsOn = false
@@ -39,17 +37,17 @@ class TimerInteractor {
         }
     }
     
-    func timerButton() {
+    func startTimerButton() {
         if sleepTimerIsOn {
             timer.invalidate()
             sleepTimerIsOn = false
             presenter.setTimerButtonTitle(string: "Resume")
-            presenter.pickerUserInteractionSwitcher()
+            presenter.switchPickerInteraction()
         } else {
             timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(countdownTimer), userInfo: nil, repeats: true)
             sleepTimerIsOn = true
             presenter.setTimerButtonTitle(string: "Stop")
-            presenter.pickerUserInteractionSwitcher()
+            presenter.switchPickerInteraction()
         }
     }
 }

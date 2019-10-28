@@ -18,6 +18,8 @@
 		05E6E4DD230327DD001B7812 /* TimerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E6E4DC230327DD001B7812 /* TimerViewController.swift */; };
 		05F2445023621F6300E66DCF /* TimerInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F2444F23621F6300E66DCF /* TimerInteractor.swift */; };
 		05F2445223621F6D00E66DCF /* TimerPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F2445123621F6D00E66DCF /* TimerPresenter.swift */; };
+		05F244552365D40800E66DCF /* PlaylistInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F244542365D40800E66DCF /* PlaylistInteractor.swift */; };
+		05F244572365D41D00E66DCF /* PlaylistPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F244562365D41D00E66DCF /* PlaylistPresenter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +37,8 @@
 		05E6E4DC230327DD001B7812 /* TimerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerViewController.swift; sourceTree = "<group>"; };
 		05F2444F23621F6300E66DCF /* TimerInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerInteractor.swift; sourceTree = "<group>"; };
 		05F2445123621F6D00E66DCF /* TimerPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerPresenter.swift; sourceTree = "<group>"; };
+		05F244542365D40800E66DCF /* PlaylistInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistInteractor.swift; sourceTree = "<group>"; };
+		05F244562365D41D00E66DCF /* PlaylistPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistPresenter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,7 +85,7 @@
 				05C5B2AA22C91CAF008BEF3D /* AppDelegate.swift */,
 				05C15205235E09A50053CD49 /* MainView */,
 				05F2444A23621F2600E66DCF /* TimerController */,
-				05A6A0C022E784AB00DB5631 /* TableViewController.swift */,
+				05F244532365D3D800E66DCF /* PlaylistController */,
 				05C5B2B122C91CB0008BEF3D /* Assets.xcassets */,
 				05C5B2AE22C91CAF008BEF3D /* Main.storyboard */,
 				05C5B2B322C91CB0008BEF3D /* LaunchScreen.storyboard */,
@@ -98,6 +102,16 @@
 				05F2445123621F6D00E66DCF /* TimerPresenter.swift */,
 			);
 			path = TimerController;
+			sourceTree = "<group>";
+		};
+		05F244532365D3D800E66DCF /* PlaylistController */ = {
+			isa = PBXGroup;
+			children = (
+				05A6A0C022E784AB00DB5631 /* TableViewController.swift */,
+				05F244542365D40800E66DCF /* PlaylistInteractor.swift */,
+				05F244562365D41D00E66DCF /* PlaylistPresenter.swift */,
+			);
+			path = PlaylistController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -176,6 +190,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				05F244572365D41D00E66DCF /* PlaylistPresenter.swift in Sources */,
+				05F244552365D40800E66DCF /* PlaylistInteractor.swift in Sources */,
 				05F2445223621F6D00E66DCF /* TimerPresenter.swift in Sources */,
 				05F2445023621F6300E66DCF /* TimerInteractor.swift in Sources */,
 				05C15207235E09BE0053CD49 /* MainViewInteractor.swift in Sources */,

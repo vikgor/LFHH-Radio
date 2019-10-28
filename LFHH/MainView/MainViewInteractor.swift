@@ -24,6 +24,7 @@ class MainViewInteractor: NSObject {
 //    var currentlyPlaying: CurrentSong?
     
     var playerItem: AVPlayerItem!
+    var radioPlayer = AVPlayer()
     var isPlaying = false
     let numberOfPartsInFileName = 1
     let timerObserver = NotificationCenter.default
@@ -36,6 +37,7 @@ class MainViewInteractor: NSObject {
         makeAudioWorkInBackground()
         timerObserver.addObserver(self, selector: #selector(pausePlayback), name: Notification.Name("PauseMusic"), object: nil)
         presenter.startDoingStuff()
+        setupRemoteTransportControls()
     }
     
     func makeAudioWorkInBackground() {
@@ -87,6 +89,19 @@ class MainViewInteractor: NSObject {
             MPMediaItemPropertyArtwork: albumArt
         ]
     }
+
+    // MARK: move to interactor
+    func setupRemoteTransportControls() {
+        let commandCenter = MPRemoteCommandCenter.shared()
+        commandCenter.playCommand.addTarget { [unowned self] event in
+            self.radioPlayer.play()
+            return .success
+        }
+        commandCenter.pauseCommand.addTarget { [unowned self] event in
+            self.radioPlayer.pause()
+            return .success
+        }
+    }
     
     //Observe - get metadata from the audio stream
     
@@ -109,7 +124,9 @@ class MainViewInteractor: NSObject {
         isPlaying.toggle()
         playerItem = AVPlayerItem(url: playBackURL!)
         presenter.resumePlayback(playerItem: playerItem)
-        let playerItem = presenter.radioPlayer.currentItem
+        radioPlayer = AVPlayer(playerItem: playerItem)
+        radioPlayer.play()
+        let playerItem = radioPlayer.currentItem
         playerItem?.addObserver(self, forKeyPath: "timedMetadata", options: NSKeyValueObservingOptions(), context: nil)
         
     }
@@ -117,8 +134,9 @@ class MainViewInteractor: NSObject {
     @objc func pausePlayback() {
         if isPlaying == true {
             isPlaying.toggle()
+            radioPlayer.pause()
             presenter.pausePlayback()
-            presenter.radioPlayer.currentItem?.removeObserver(self, forKeyPath: "timedMetadata")
+            radioPlayer.currentItem?.removeObserver(self, forKeyPath: "timedMetadata")
         }
     }
     

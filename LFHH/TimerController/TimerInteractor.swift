@@ -33,20 +33,20 @@ class TimerInteractor {
             print("Countdown has ended. Radio paused.")
             notification.post(name: Notification.Name("PauseMusic"), object: nil)
             timer.invalidate()
-            presenter.setTimerButtonTitle(string: "Chilling...")
+            presenter.setTimerButtonChilling()
         }
     }
     
-    func startTimerButton() {
+    func startTimer() {
         if sleepTimerIsOn {
             timer.invalidate()
             sleepTimerIsOn = false
-            presenter.setTimerButtonTitle(string: "Resume")
+            presenter.setTimerButtonResume()
             presenter.switchPickerInteraction()
         } else {
             timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(countdownTimer), userInfo: nil, repeats: true)
             sleepTimerIsOn = true
-            presenter.setTimerButtonTitle(string: "Stop")
+            presenter.setTimerButtonPause()
             presenter.switchPickerInteraction()
         }
     }

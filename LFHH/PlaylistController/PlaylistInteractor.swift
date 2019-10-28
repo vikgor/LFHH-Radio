@@ -12,18 +12,20 @@ class PlaylistInteractor {
     
     var presenter: PlaylistPresenter?
     
-
-//    let myURLString = "https://8137147.xyz/1/playlist/playlist.php"
     let myURLString = "https://vivalaresistance.ru/lfhh/lfhhhistory.php"
-    
     var historyArray: [String.SubSequence]?
-    
+////    Why did I do this??
+//    var historyArray: [String.SubSequence]? {
+//        didSet {
+//            tableView.reloadData()
+//
+//        }
+//    }
     
     func startDoingStuff() {
         presenter?.startDoingStuff()
+        getRadioPlaylist()
     }
-    
-    
     
     func getRadioPlaylist() {
         guard let myURL = NSURL(string: myURLString) else {
@@ -31,10 +33,11 @@ class PlaylistInteractor {
             return
         }
         do {
-            let myHTMLString = try String(contentsOf: myURL as URL, encoding: .windowsCP1251) //the actual playlist, in text format
-            historyArray = myHTMLString.split {$0.isNewline} //playlist, converted to an array
+            let myHTMLString = try String(contentsOf: myURL as URL, encoding: .windowsCP1251) //playlist in text format
+            historyArray = myHTMLString.split {$0.isNewline} //playlist -> array
         } catch let error as NSError {
             print("Error: \(error)")
         }
     }
+
 }

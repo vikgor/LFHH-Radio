@@ -14,7 +14,7 @@ class TimerViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
     @IBOutlet weak var labelTimer: UILabel!
     @IBOutlet weak var timerButton: UIButton!
     @IBAction func timerButton(_ sender: Any) {
-        interactor.startTimerButton()
+        interactor.startTimer()
     }
     
     var interactor: TimerInteractor = TimerInteractor()

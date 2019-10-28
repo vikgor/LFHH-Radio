@@ -7,22 +7,14 @@
 //
 
 import Foundation
+import UIKit
 
 class PlaylistPresenter {
     
-    var viewController: TableViewController?
+    var viewController: PlaylistViewController?
     
     func startDoingStuff() {
-        
-        
-
-    }
-    
-    @objc func refresh(sender:AnyObject)
-    {
-//        getRadioHistory()
-        viewController?.tableView.reloadData()
-        viewController?.refreshControl?.endRefreshing()
+        viewController?.tableView.rowHeight = (viewController?.screenSize.height)! * 0.09 //Make the 10 rows fill the entire screen
     }
     
 }

@@ -34,9 +34,9 @@ class MainViewInteractor: NSObject {
     
     func startDoingStuff() {
         makeAudioWorkInBackground()
-        timerObserver.addObserver(self, selector: #selector(pausePlayback), name: Notification.Name("PauseMusic"), object: nil)
-        presenter.startDoingStuff()
         setupRemoteTransportControls()
+        presenter.startDoingStuff()
+        timerObserver.addObserver(self, selector: #selector(pausePlayback), name: Notification.Name("PauseMusic"), object: nil)
     }
     
     func makeAudioWorkInBackground() {
@@ -49,9 +49,40 @@ class MainViewInteractor: NSObject {
             print(error)
         }
     }
+
+    func setupRemoteTransportControls() {
+        let commandCenter = MPRemoteCommandCenter.shared()
+        commandCenter.playCommand.addTarget { [unowned self] event in
+            self.radioPlayer.play()
+            return .success
+        }
+        commandCenter.pauseCommand.addTarget { [unowned self] event in
+            self.radioPlayer.pause()
+            return .success
+        }
+    }
     
-    func makeFullSongName(source: CurrentSong) -> String{
-         return "\(source.artist) - \(source.track)"
+    //Observe metadata
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        guard keyPath == "timedMetadata" else { return }
+        guard let meta = playerItem.timedMetadata else { return }
+        for metadata in meta {
+            if let originalFileName = metadata.value(forKey: "value") as? String {
+                print(originalFileName)
+                checkIfAlive(originalFileName: originalFileName)
+                splitFileNameIntoArtistAndTrack(string: originalFileName)
+                setupInfoCenter()
+                presenter.updateMainLabelFromPresenter(trackTitle: makeFullSongName(source: currentlyPlaying))
+                print("New song much?\nFile name: \(originalFileName)\nArtist: \(currentlyPlaying.artist)\nTrack: \(currentlyPlaying.track)")
+            }
+        }
+    }
+
+    //See if the radio is online by checking the metadata
+    func checkIfAlive(originalFileName: String) {
+        if (originalFileName == ("Lavf56.15.102") || originalFileName == ("B4A7D6322MH1376302278118826")) {
+            currentlyPlaying = CurrentSong(fileName: "Offline... stay tuned!", track: "stay tuned...", artist: "LFHH is offline")
+        }
     }
     
     func splitFileNameIntoArtistAndTrack(string: String) {
@@ -67,12 +98,9 @@ class MainViewInteractor: NSObject {
             currentlyPlaying = CurrentSong(track: stringParts[1], artist: stringParts[0])
         }
     }
-
-    //See if the radio is online by checking the metadata
-    func checkIfAlive(originalFileName: String) {
-        if (originalFileName == ("Lavf56.15.102") || originalFileName == ("B4A7D6322MH1376302278118826")) {
-            currentlyPlaying = CurrentSong(fileName: "Offline... stay tuned!", track: "stay tuned...", artist: "LFHH is offline")
-        }
+    
+    func makeFullSongName(source: CurrentSong) -> String{
+         return "\(source.artist) - \(source.track)"
     }
     
     func setupInfoCenter() {
@@ -87,35 +115,6 @@ class MainViewInteractor: NSObject {
             MPMediaItemPropertyArtwork: albumArt
         ]
     }
-
-    func setupRemoteTransportControls() {
-        let commandCenter = MPRemoteCommandCenter.shared()
-        commandCenter.playCommand.addTarget { [unowned self] event in
-            self.radioPlayer.play()
-            return .success
-        }
-        commandCenter.pauseCommand.addTarget { [unowned self] event in
-            self.radioPlayer.pause()
-            return .success
-        }
-    }
-    
-    //Observe - get metadata from the audio stream
-    
-    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        guard keyPath == "timedMetadata" else { return }
-        guard let meta = playerItem.timedMetadata else { return }
-        for metadata in meta {
-            if let originalFileName = metadata.value(forKey: "value") as? String {
-                print(originalFileName)
-                checkIfAlive(originalFileName: originalFileName)
-                splitFileNameIntoArtistAndTrack(string: originalFileName)
-                setupInfoCenter()
-                presenter.updateMainLabelFromPresenter(trackTitle: makeFullSongName(source: currentlyPlaying))
-                print("New song much?\nFile name: \(originalFileName)\nArtist: \(currentlyPlaying.artist)\nTrack: \(currentlyPlaying.track)")
-            }
-        }
-    }
     
     func resumePlayback() {
         isPlaying.toggle()
@@ -128,7 +127,8 @@ class MainViewInteractor: NSObject {
         
     }
     
-    @objc func pausePlayback() {
+    @objc
+    func pausePlayback() {
         if isPlaying == true {
             isPlaying.toggle()
             radioPlayer.pause()

@@ -18,14 +18,6 @@ class MainViewController: UIViewController {
     
     var interactor: MainViewInteractor?
     
-    
-    
-    
-    /**
-     Setting up the VIP cycle
-     # The VIP cycle:
-     MainViewController -> Interactor -> Presenter -> ViewController
-    */
     func setup() {
         let interactor = MainViewInteractor()
         self.interactor = interactor

@@ -11,7 +11,7 @@ import UIKit
 
 class PlaylistPresenter {
     
-    var viewController: PlaylistViewController?
+    weak var viewController: PlaylistViewController?
     
     func refresh() {
         viewController?.tableView.reloadData()

@@ -11,7 +11,7 @@ import MediaPlayer
 
 class MainViewPresenter {
     
-    var viewController: MainViewController?
+    weak var viewController: MainViewController?
     
     var playImage = UIImage(named: "play-button-white")
     var pauseImage = UIImage(named: "pause-button-white")

@@ -23,7 +23,6 @@ class PlaylistInteractor {
 //    }
     
     func startDoingStuff() {
-        presenter?.startDoingStuff()
         getRadioPlaylist()
     }
     
@@ -38,6 +37,8 @@ class PlaylistInteractor {
         } catch let error as NSError {
             print("Error: \(error)")
         }
+        
+        presenter?.refresh()
     }
 
 }

@@ -26,6 +26,7 @@ class PlaylistViewController: UITableViewController {
         setup()
         interactor?.startDoingStuff()
         self.refreshControl?.addTarget(self, action: #selector(refresh), for: UIControl.Event.valueChanged)
+        tableView.rowHeight = screenSize.height * 0.09 //Make the 10 rows fill the entire screen
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -42,15 +43,12 @@ class PlaylistViewController: UITableViewController {
     @objc func refresh(sender:AnyObject)
     {
         interactor?.getRadioPlaylist()
-        //move next two to presenter
-        self.tableView.reloadData()
-        self.refreshControl?.endRefreshing()
     }
         
-    //    override func viewDidAppear(_ animated: Bool) {
-    //        print("Getting updated playlist...")
-    //        interactor?.getRadioPlaylist()
-    //    }
+        override func viewDidAppear(_ animated: Bool) {
+            print("Getting updated playlist...")
+            interactor?.getRadioPlaylist()
+        }
 
     //    override func numberOfSections(in tableView: UITableView) -> Int {
     //        return 1

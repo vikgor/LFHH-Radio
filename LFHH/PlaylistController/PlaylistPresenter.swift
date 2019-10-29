@@ -13,8 +13,9 @@ class PlaylistPresenter {
     
     var viewController: PlaylistViewController?
     
-    func startDoingStuff() {
-        viewController?.tableView.rowHeight = (viewController?.screenSize.height)! * 0.09 //Make the 10 rows fill the entire screen
+    func refresh() {
+        viewController?.tableView.reloadData()
+        viewController?.refreshControl?.endRefreshing()
     }
     
 }

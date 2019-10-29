@@ -28,14 +28,14 @@
                                     <constraint firstAttribute="width" secondItem="LVm-fZ-uTs" secondAttribute="height" multiplier="1:1" id="Ldu-kP-aYx"/>
                                 </constraints>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3EY-iB-lfc">
+                            <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3EY-iB-lfc">
                                 <rect key="frame" x="135" y="405" width="50" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="057-li-SCa"/>
                                     <constraint firstAttribute="width" constant="50" id="Ogj-SA-IvU"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <state key="normal" title="Button" image="play-button-white"/>
+                                <state key="normal" image="play-button-white"/>
                                 <connections>
                                     <action selector="playRadio:" destination="BYZ-38-t0r" eventType="touchUpInside" id="6eY-fa-tXY"/>
                                 </connections>
@@ -49,10 +49,10 @@
                         </subviews>
                         <color key="backgroundColor" cocoaTouchSystemColor="viewFlipsideBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="3EY-iB-lfc" firstAttribute="centerX" secondItem="9J9-qh-bO9" secondAttribute="centerX" id="0Vd-59-jB2"/>
                             <constraint firstItem="t2S-pw-esA" firstAttribute="top" secondItem="LVm-fZ-uTs" secondAttribute="bottom" constant="16" id="2FR-Cw-OcK"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="9J9-qh-bO9" secondAttribute="trailing" constant="16" id="538-W3-fui"/>
                             <constraint firstItem="9J9-qh-bO9" firstAttribute="top" secondItem="3EY-iB-lfc" secondAttribute="bottom" constant="16" id="B8j-qg-vpY"/>
-                            <constraint firstItem="3EY-iB-lfc" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="DB6-Ym-VLY"/>
                             <constraint firstItem="9J9-qh-bO9" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="GKe-86-MW1"/>
                             <constraint firstItem="t2S-pw-esA" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="aKn-ha-zYK"/>
                             <constraint firstItem="LVm-fZ-uTs" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="dZQ-Cv-EYX"/>
@@ -115,7 +115,6 @@
                             <constraint firstItem="2PT-Ph-axy" firstAttribute="top" secondItem="BVO-1m-N25" secondAttribute="bottom" constant="16" id="dht-CW-9P0"/>
                             <constraint firstItem="vUy-j5-nqj" firstAttribute="bottom" secondItem="1ft-II-thO" secondAttribute="bottom" constant="16" id="gHx-XQ-fyl"/>
                             <constraint firstItem="vUy-j5-nqj" firstAttribute="trailing" secondItem="2PT-Ph-axy" secondAttribute="trailing" constant="16" id="hDG-rE-6XA"/>
-                            <constraint firstItem="2PT-Ph-axy" firstAttribute="centerX" secondItem="2Sr-Mr-LiT" secondAttribute="centerX" id="hcN-dv-Zsy"/>
                             <constraint firstItem="K07-HB-g3u" firstAttribute="centerX" secondItem="2Sr-Mr-LiT" secondAttribute="centerX" id="hu4-gS-aoN"/>
                             <constraint firstItem="2PT-Ph-axy" firstAttribute="leading" secondItem="vUy-j5-nqj" secondAttribute="leading" constant="16" id="ry9-I3-lvH"/>
                             <constraint firstItem="1ft-II-thO" firstAttribute="top" secondItem="K07-HB-g3u" secondAttribute="bottom" constant="16" id="vSY-lM-mSb"/>

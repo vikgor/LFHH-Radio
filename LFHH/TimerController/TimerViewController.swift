@@ -20,8 +20,6 @@ class TimerViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
     var interactor: TimerInteractor = TimerInteractor()
     
     func setup() {
-//        let interactor = TimerInteractor()
-//        self.interactor = interactor
         let presenter = TimerPresenter()
         interactor.presenter = presenter
         presenter.viewController = self
@@ -57,17 +55,5 @@ class TimerViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
     func setTimerButtonTitle(string: String) {
         timerButton.setTitle(string, for: .normal)
     }
-    
-    
-//    // MARK: I can also switch from 2 arrays to a dictionary:
-//    var pickerData: [String : Int] = [
-//        "1 minute": 60,
-//        "5 minutes": 300,
-//        "10 minutes": 600,
-//        "15 minutes": 900,
-//        "30 minutes": 1800,
-//        "45 minutes": 2400,
-//        "1 hour": 3600,
-//    ]
     
 }

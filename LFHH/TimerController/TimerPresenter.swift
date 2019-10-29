@@ -10,7 +10,7 @@ import Foundation
 
 class TimerPresenter {
     
-    var viewController: TimerViewController?
+    weak var viewController: TimerViewController?
     
     func setTimerLabelText(string: String) {
         viewController?.setTimerLabelText(string: string)

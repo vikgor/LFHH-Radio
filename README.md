@@ -26,6 +26,8 @@
     - [x] Main View
     - [x] Timer
     - [x] Playlist
+- [ ] splitFileNameIntoArtistAndTrack(): may crash if name format isn't "aaa - bbb.mp3"
+- [x] checkIfAlive(): Don't forget to check offline mode
 - [ ] Design
     - [ ] Fix volume view width
     - [ ] Long track titles fix

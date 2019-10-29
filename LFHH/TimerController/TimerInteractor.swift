@@ -19,7 +19,8 @@ class TimerInteractor {
     var sleepTimerIsOn = false
     let notification = NotificationCenter.default
     
-    @objc func countdownTimer() {
+    @objc
+    func startCountdown() {
         print(pickerSeconds)
         if pickerSeconds >= 0 {
             let minutes = String(format: "%02d", pickerSeconds / 60)
@@ -44,7 +45,7 @@ class TimerInteractor {
             presenter.setTimerButtonResume()
             presenter.switchPickerInteraction()
         } else {
-            timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(countdownTimer), userInfo: nil, repeats: true)
+            timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(startCountdown), userInfo: nil, repeats: true)
             sleepTimerIsOn = true
             presenter.setTimerButtonPause()
             presenter.switchPickerInteraction()

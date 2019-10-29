@@ -21,7 +21,6 @@ class MainViewInteractor: NSObject {
     
     var presenter = MainViewPresenter()
     var currentlyPlaying = CurrentSong(fileName: "", track: "", artist: "")
-//    var currentlyPlaying: CurrentSong?
     
     var playerItem: AVPlayerItem!
     var radioPlayer = AVPlayer()
@@ -64,16 +63,15 @@ class MainViewInteractor: NSObject {
         }
         
         if stringParts.count > numberOfPartsInFileName {
+            // FIXME: -may crash if name format isn't "aaa - bbb.mp3"
             currentlyPlaying = CurrentSong(track: stringParts[1], artist: stringParts[0])
         }
     }
 
-    // MARK: Don't forget to check offline mode:
+    //See if the radio is online by checking the metadata
     func checkIfAlive(originalFileName: String) {
-        //See if the radio is online by checking the metadata
         if (originalFileName == ("Lavf56.15.102") || originalFileName == ("B4A7D6322MH1376302278118826")) {
-            currentlyPlaying = CurrentSong(fileName: "Offline... stay tuned!", track: "offline...", artist: "LFHH")
-            presenter.updateMainLabelFromPresenter(trackTitle: "Offline... stay tuned!")
+            currentlyPlaying = CurrentSong(fileName: "Offline... stay tuned!", track: "stay tuned...", artist: "LFHH is offline")
         }
     }
     
@@ -90,7 +88,6 @@ class MainViewInteractor: NSObject {
         ]
     }
 
-    // MARK: move to interactor
     func setupRemoteTransportControls() {
         let commandCenter = MPRemoteCommandCenter.shared()
         commandCenter.playCommand.addTarget { [unowned self] event in
@@ -111,10 +108,10 @@ class MainViewInteractor: NSObject {
         for metadata in meta {
             if let originalFileName = metadata.value(forKey: "value") as? String {
                 print(originalFileName)
+                checkIfAlive(originalFileName: originalFileName)
                 splitFileNameIntoArtistAndTrack(string: originalFileName)
                 setupInfoCenter()
                 presenter.updateMainLabelFromPresenter(trackTitle: makeFullSongName(source: currentlyPlaying))
-                checkIfAlive(originalFileName: originalFileName)
                 print("New song much?\nFile name: \(originalFileName)\nArtist: \(currentlyPlaying.artist)\nTrack: \(currentlyPlaying.track)")
             }
         }

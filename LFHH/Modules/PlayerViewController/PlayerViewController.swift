@@ -11,16 +11,15 @@ import AVFoundation
 import MediaPlayer
 
 protocol PlayerDisplayLogic: class {
-    func updateMainLabel(trackTitle: String)
-    func resumePlayback(playerItem: AVPlayerItem)
-    func pausePlayback()
+    func updatePlayback(playerStatus: PlayerStatus, trackTitle: String?)
+    func displayInfoCenter(with currentlyPlaying: CurrentSong)
 }
 
 final class PlayerViewController: UIViewController {
     
     @IBOutlet private weak var radioButton: UIButton!
     @IBOutlet private weak var trackTitleLabel: UILabel!
-    @IBOutlet private weak var mpVolumeHolderView: UIView!
+    @IBOutlet private weak var volumeView: MPVolumeView!
     
     private var isPlaying = false
     
@@ -39,35 +38,46 @@ final class PlayerViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        interactor?.preparePlayer()
+        interactor?.updatePlayback(playerStatus: .notPlaying)
         setupSubviews()
     }
     
-    @IBAction func playRadio(_ sender: UIButton) {
-        switch isPlaying {
-        case false:
-            interactor?.resumePlayback()
-        default:
-            interactor?.pausePlayback()
-        }
+    @IBAction private func playRadio(_ sender: UIButton) {
+        isPlaying ? interactor?.updatePlayback(playerStatus: .paused) : interactor?.updatePlayback(playerStatus: .playing)
+        isPlaying.toggle()
     }
-
+    
 }
 
 // MARK: - PlayerDisplayLogic
 
 extension PlayerViewController: PlayerDisplayLogic {
-    func updateMainLabel(trackTitle: String) {
-        trackTitleLabel.text = trackTitle
-    }
-    func resumePlayback(playerItem: AVPlayerItem) {
-        radioButton.setImage(UIImage(named: "play-button-white"),
-                             for: .normal)
+    
+    func updatePlayback(playerStatus: PlayerStatus, trackTitle: String?) {
+        trackTitleLabel.text = (trackTitle != nil) ? trackTitle : playerStatus.rawValue
+        
+        switch playerStatus {
+        case .notPlaying:
+            break
+        case .playing:
+            radioButton.setImage(#imageLiteral(resourceName: "pause-button-white"), for: .normal)
+        case .paused:
+            radioButton.setImage(#imageLiteral(resourceName: "play-button-white"), for: .normal)
+        }
     }
     
-    func pausePlayback() {
-        radioButton.setImage(UIImage(named: "pause-button-white"), for: .normal)
+    func displayInfoCenter(with currentlyPlaying: CurrentSong) {
+        let image = #imageLiteral(resourceName: "lofinight")
+        let albumArt = MPMediaItemArtwork.init(boundsSize: image.size,
+                                               requestHandler: { (size) -> UIImage in
+                                                return image
+                                               })
+        MPNowPlayingInfoCenter.default().nowPlayingInfo = [
+            MPNowPlayingInfoPropertyIsLiveStream: true,
+            MPMediaItemPropertyArtist: currentlyPlaying.artist,
+            MPMediaItemPropertyTitle: currentlyPlaying.track,
+            MPMediaItemPropertyArtwork: albumArt
+        ]
     }
 }
 
@@ -80,11 +90,9 @@ private extension PlayerViewController {
     }
     
     func addVolumeControls() {
-        mpVolumeHolderView.backgroundColor = .clear
-        let mpVolume = MPVolumeView(frame: mpVolumeHolderView.bounds)
-        mpVolume.showsRouteButton = true
-        mpVolumeHolderView.addSubview(mpVolume)
-        view.addSubview(mpVolumeHolderView)
+        volumeView.backgroundColor = .clear
+        volumeView.showsRouteButton = true
+        volumeView.tintColor = UIColor(named: "yellow")
     }
     
 }

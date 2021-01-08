@@ -7,13 +7,10 @@
 //
 
 import Foundation
-import MediaPlayer
 
 protocol PlayerPresentationLogic {
-    func presentPlayer()
-    func resumePlayback(playerItem: AVPlayerItem)
-    func pausePlayback()
-    func updateMainLabelFromPresenter(trackTitle: String)
+    func updatePlayback(playerStatus: PlayerStatus, trackTitle: String?)
+    func presentInfoCenter(with currentlyPlaying: CurrentSong)
 }
 
 final class PlayerPresenter {
@@ -26,22 +23,14 @@ final class PlayerPresenter {
 
 extension PlayerPresenter: PlayerPresentationLogic {
     
-    func updateMainLabelFromPresenter(trackTitle: String) {
-        viewController?.updateMainLabel(trackTitle: trackTitle)
-    }
-    func presentPlayer() {
-        viewController?.updateMainLabel(trackTitle: "Press Play...")
+    func updatePlayback(playerStatus: PlayerStatus, trackTitle: String?) {
+        viewController?.updatePlayback(playerStatus: playerStatus, trackTitle: trackTitle)
     }
     
-    func resumePlayback(playerItem: AVPlayerItem) {
-        viewController?.resumePlayback(playerItem: playerItem)
-        viewController?.updateMainLabel(trackTitle: "connecting...")
+    func presentInfoCenter(with currentlyPlaying: CurrentSong) {
+        viewController?.displayInfoCenter(with: currentlyPlaying)
     }
     
-    func pausePlayback() {
-        viewController?.pausePlayback()
-        viewController?.updateMainLabel(trackTitle: "Paused...")
-    }
 }
 
 // MARK: - Private Methods

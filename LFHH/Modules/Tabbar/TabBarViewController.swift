@@ -127,8 +127,8 @@ private extension TabBarViewController {
         navigation.setNavigationBarHidden(false, animated: true)
         navigation.tabBarItem = UITabBarItem(
             title: nil,
-            image: UIImage(named: "music-player"),
-            selectedImage: UIImage(named: "music-player"))
+            image: #imageLiteral(resourceName: "music-player"),
+            selectedImage: #imageLiteral(resourceName: "music-player"))
         
         return navigation
     }
@@ -142,8 +142,8 @@ private extension TabBarViewController {
         navigation.setNavigationBarHidden(true, animated: true)
         navigation.tabBarItem = UITabBarItem(
             title: nil,
-            image: UIImage(named: "stopwatch"),
-            selectedImage: UIImage(named: "stopwatch"))
+            image: #imageLiteral(resourceName: "stopwatch"),
+            selectedImage: #imageLiteral(resourceName: "stopwatch"))
         
         return navigation
     }
@@ -157,8 +157,8 @@ private extension TabBarViewController {
         navigation.setNavigationBarHidden(true, animated: true)
         navigation.tabBarItem = UITabBarItem(
             title: nil,
-            image: UIImage(named: "file"),
-            selectedImage: UIImage(named: "file"))
+            image: #imageLiteral(resourceName: "file"),
+            selectedImage: #imageLiteral(resourceName: "file"))
         
         return navigation
     }

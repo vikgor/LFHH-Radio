@@ -1,9 +1,9 @@
 //
-//  MainViewswift
+//  PlayerInteractor.swift
 //  LFHH
 //
-//  Created by Viktor Gordienko on 10/21/19.
-//  Copyright © 2019 Viktor Gordienko. All rights reserved.
+//  Created by Viktor Gordienko on 1/7/21.
+//  Copyright © 2021 Viktor Gordienko. All rights reserved.
 //
 
 import Foundation
@@ -11,37 +11,37 @@ import UIKit
 import AVFoundation
 import MediaPlayer
 
-struct CurrentSong {
-       var fileName : String?
-       var track : String
-       var artist : String
+protocol PlayerBusinessLogic {
+    func preparePlayer()
+    func resumePlayback()
+    func pausePlayback()
 }
 
-class MainViewInteractor: NSObject {
+final class PlayerInteractor: NSObject {
     
-    var presenter = MainViewPresenter()
+    var presenter: PlayerPresentationLogic?
     var currentlyPlaying = CurrentSong(fileName: "", track: "", artist: "")
-    
     var playerItem: AVPlayerItem!
     var radioPlayer = AVPlayer()
     var isPlaying = false
     let numberOfPartsInFileName = 1
     let timerObserver = NotificationCenter.default
-    let playBackURL = URL(string: "https://vivalaresistance.ru/streamlofi")
+//    let playBackURL = URL(string: "https://vivalaresistance.ru/streamlofi")
+    let playBackURL = URL(string: "http://62.109.25.83:8000/lofi")
 //    let playBackURL = URL(string: "http://62.109.25.83:8000/radio")   //checking offline mode
-//    let playBackURL = URL(string: "https://nashe1.hostingradio.ru:80/nashe-64.mp3")   //this link usually works
     
-    
-    func startDoingStuff() {
+    func preparePlayer() {
         makeAudioWorkInBackground()
         setupRemoteTransportControls()
-        presenter.startDoingStuff()
+        presenter?.presentPlayer()
         timerObserver.addObserver(self, selector: #selector(pausePlayback), name: Notification.Name("PauseMusic"), object: nil)
     }
     
     func makeAudioWorkInBackground() {
         do {
-            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: [.allowAirPlay])
+            try AVAudioSession.sharedInstance().setCategory(.playback,
+                                                            mode: .default,
+                                                            options: [.allowAirPlay])
             print("Playback OK")
             try AVAudioSession.sharedInstance().setActive(true)
             print("Session is Active")
@@ -72,7 +72,7 @@ class MainViewInteractor: NSObject {
                 checkIfAlive(originalFileName: originalFileName)
                 splitFileNameIntoArtistAndTrack(string: originalFileName)
                 setupInfoCenter()
-                presenter.updateMainLabelFromPresenter(trackTitle: makeFullSongName(source: currentlyPlaying))
+                presenter?.updateMainLabelFromPresenter(trackTitle: makeFullSongName(source: currentlyPlaying))
                 print("New song much?\nFile name: \(originalFileName)\nArtist: \(currentlyPlaying.artist)\nTrack: \(currentlyPlaying.track)")
             }
         }
@@ -94,8 +94,10 @@ class MainViewInteractor: NSObject {
         }
         
         if stringParts.count > numberOfPartsInFileName {
-            // FIXME: -may crash if name format isn't "aaa - bbb.mp3"
-            currentlyPlaying = CurrentSong(track: stringParts[1], artist: stringParts[0])
+            //TODO: - may crash if name format isn't "aaa - bbb.mp3"
+            currentlyPlaying = CurrentSong(fileName: nil,
+                                           track: stringParts[1],
+                                           artist: stringParts[0])
         }
     }
     
@@ -119,7 +121,7 @@ class MainViewInteractor: NSObject {
     func resumePlayback() {
         isPlaying.toggle()
         playerItem = AVPlayerItem(url: playBackURL!)
-        presenter.resumePlayback(playerItem: playerItem)
+        presenter?.resumePlayback(playerItem: playerItem)
         radioPlayer = AVPlayer(playerItem: playerItem)
         radioPlayer.play()
         let playerItem = radioPlayer.currentItem
@@ -132,9 +134,21 @@ class MainViewInteractor: NSObject {
         if isPlaying == true {
             isPlaying.toggle()
             radioPlayer.pause()
-            presenter.pausePlayback()
+            presenter?.pausePlayback()
             radioPlayer.currentItem?.removeObserver(self, forKeyPath: "timedMetadata")
         }
     }
+    
+}
+
+// MARK: - PlayerBusinessLogic
+
+extension PlayerInteractor: PlayerBusinessLogic {
+    
+}
+
+// MARK: - Private Methods
+
+private extension PlayerInteractor {
     
 }

@@ -10,11 +10,11 @@ import UIKit
 
 protocol TimerDisplayLogic: class {
     func toggleUserInteractions()
-    func setTimerLabelText(string: String)
-    func setTimerButtonTitle(string: String)
+    func setTimerLabelText(_ string: String)
+    func setTimerButtonTitle(_ string: String)
 }
 
-final class TimerViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+final class TimerViewController: UIViewController {
     
     @IBOutlet private weak var sleepTimerMinutes: UIPickerView!
     @IBOutlet private weak var labelTimer: UILabel!
@@ -24,11 +24,10 @@ final class TimerViewController: UIViewController, UIPickerViewDelegate, UIPicke
         interactor?.startTimer()
     }
     
-    // TODO: - Get rid of it in the controller
-    var viewModel = TimerViewModel()
-    
     var interactor: TimerBusinessLogic?
     var router: TimerRoutingLogic?
+    
+    private var viewModel = TimerViewModel()
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -42,32 +41,9 @@ final class TimerViewController: UIViewController, UIPickerViewDelegate, UIPicke
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        sleepTimerMinutes.delegate = self
-        sleepTimerMinutes.dataSource = self
-        setTimerButtonTitle(string: "Chill...")
+        setupSubviews()
     }
     
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return viewModel.pickerData.count
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return String(viewModel.pickerData[row])
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
-        return NSAttributedString(string: String(viewModel.pickerData[row]), attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        viewModel.pickerSeconds = viewModel.pickerMinutes[row]
-    }
-    
-
 }
 
 // MARK: - TimerDisplayLogic
@@ -77,17 +53,47 @@ extension TimerViewController: TimerDisplayLogic {
         sleepTimerMinutes.isUserInteractionEnabled.toggle()
     }
     
-    func setTimerLabelText(string: String) {
+    func setTimerLabelText(_ string: String) {
         labelTimer.text = string
     }
     
-    func setTimerButtonTitle(string: String) {
+    func setTimerButtonTitle(_ string: String) {
         timerButton.setTitle(string, for: .normal)
+    }
+}
+
+// MARK: - UIPickerViewDelegate, UIPickerViewDataSource
+
+extension TimerViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return viewModel.pickerData.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return String(viewModel.pickerData[row].label)
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
+        return NSAttributedString(string: String(viewModel.pickerData[row].label),
+                                  attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        TimerViewModel.pickerSeconds = viewModel.pickerData[row].seconds
     }
 }
 
 // MARK: - Private Methods
 
 private extension TimerViewController {
-    
+    func setupSubviews() {
+        timerButton.tintColor = UIColor(named: "yellow")
+        sleepTimerMinutes.delegate = self
+        sleepTimerMinutes.dataSource = self
+        setTimerButtonTitle(TimerViewModel.chillLabel)
+    }
 }

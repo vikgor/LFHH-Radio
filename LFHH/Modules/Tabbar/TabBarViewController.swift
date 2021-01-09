@@ -64,8 +64,7 @@ private extension TabBarViewController {
     }
     
     func setupTabBar() {
-//        self.tabBar.layer.setupMainShadow()
-//        self.tabBar.backgroundColor = .white
+        self.tabBar.tintColor = UIColor(named: "yellow")
         self.tabBar.layer.masksToBounds = false
         UITabBar.appearance().shadowImage = UIImage()
         UITabBar.appearance().backgroundImage = UIImage()
@@ -76,14 +75,14 @@ private extension TabBarViewController {
     func setupLine() {
         lineView.layer.cornerRadius = 4
         lineView.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
-//        lineView.backgroundColor = R.color.orange()
+        lineView.backgroundColor = UIColor(named: "yellow")
         self.tabBar.addSubview(lineView)
 
         lineView.translatesAutoresizingMaskIntoConstraints = false
         
         leftLineConstraint = lineView.leftAnchor.constraint(equalTo: self.tabBar.leftAnchor, constant: 0)
         leftLineConstraint.isActive = true
-        lineView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width/5).isActive = true
+        lineView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width / 3).isActive = true
         lineView.topAnchor.constraint(equalTo: self.tabBar.topAnchor, constant: 0).isActive = true
         lineView.heightAnchor.constraint(equalToConstant: 4).isActive = true
     }
@@ -95,7 +94,7 @@ private extension TabBarViewController {
             return
         }
         
-        let width = Int(UIScreen.main.bounds.width)/5
+        let width = Int(UIScreen.main.bounds.width) / 3
         let leftSpacing = (index * width)
         
         leftLineConstraint.constant = CGFloat(leftSpacing)

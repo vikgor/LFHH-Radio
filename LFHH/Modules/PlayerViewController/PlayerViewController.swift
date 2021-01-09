@@ -21,6 +21,11 @@ final class PlayerViewController: UIViewController {
     @IBOutlet private weak var trackTitleLabel: UILabel!
     @IBOutlet private weak var volumeView: MPVolumeView!
     
+    @IBAction private func playRadio(_ sender: UIButton) {
+        isPlaying ? interactor?.updatePlayback(playerStatus: .paused) : interactor?.updatePlayback(playerStatus: .playing)
+        isPlaying.toggle()
+    }
+    
     private var isPlaying = false
     
     var interactor: PlayerBusinessLogic?
@@ -40,11 +45,6 @@ final class PlayerViewController: UIViewController {
         super.viewDidLoad()
         interactor?.updatePlayback(playerStatus: .notPlaying)
         setupSubviews()
-    }
-    
-    @IBAction private func playRadio(_ sender: UIButton) {
-        isPlaying ? interactor?.updatePlayback(playerStatus: .paused) : interactor?.updatePlayback(playerStatus: .playing)
-        isPlaying.toggle()
     }
     
 }

@@ -9,11 +9,8 @@
 import Foundation
 
 protocol TimerPresentationLogic {
-    func setTimerLabelText(string: String)
-    func setTimerButtonTitle(string: String)
-    func setTimerButtonChilling()
-    func setTimerButtonResume()
-    func setTimerButtonPause()
+    func updateTimerLabel(with string: String)
+    func updateTimerButton(status: ChillStatus)
     func switchPickerInteraction()
 }
 
@@ -27,24 +24,12 @@ final class TimerPresenter {
 
 extension TimerPresenter: TimerPresentationLogic {
     
-    func setTimerLabelText(string: String) {
-        viewController?.setTimerLabelText(string: string)
+    func updateTimerLabel(with string: String) {
+        viewController?.setTimerLabelText(string)
     }
     
-    func setTimerButtonTitle(string: String) {
-        viewController?.setTimerButtonTitle(string: string)
-    }
-    
-    func setTimerButtonChilling() {
-        setTimerButtonTitle(string: "Chilling...")
-    }
-    
-    func setTimerButtonResume() {
-        setTimerButtonTitle(string: "Resume")
-    }
-    
-    func setTimerButtonPause() {
-        setTimerButtonTitle(string: "Pause")
+    func updateTimerButton(status: ChillStatus) {
+        viewController?.setTimerButtonTitle(status.rawValue)
     }
     
     func switchPickerInteraction() {

@@ -9,15 +9,12 @@
 import Foundation
 
 protocol TimerBusinessLogic {
-    func startCountdown()
     func startTimer()
 }
 
 final class TimerInteractor {
     
     var presenter: TimerPresentationLogic?
-    
-    var viewModel = TimerViewModel()
     
     var timer = Timer()
     var sleepTimerIsOn = false
@@ -28,35 +25,20 @@ final class TimerInteractor {
 // MARK: - TimerBusinessLogic
 
 extension TimerInteractor: TimerBusinessLogic {
-    @objc
-    func startCountdown() {
-        print(viewModel.pickerSeconds)
-        if viewModel.pickerSeconds >= 0 {
-            let minutes = String(format: "%02d", viewModel.pickerSeconds / 60)
-            let seconds = String(format: "%02d", viewModel.pickerSeconds % 60)
-            let timerLabelText = minutes + ":" + seconds
-            viewModel.pickerSeconds -= 1
-            presenter?.setTimerLabelText(string: timerLabelText)
-        }
-        if viewModel.pickerSeconds < 0 {
-            sleepTimerIsOn = false
-            print("Countdown has ended. Radio paused.")
-            notification.post(name: Notification.Name("PauseMusic"), object: nil)
-            timer.invalidate()
-            presenter?.setTimerButtonChilling()
-        }
-    }
-    
     func startTimer() {
         if sleepTimerIsOn {
-            timer.invalidate()
             sleepTimerIsOn = false
-            presenter?.setTimerButtonResume()
+            timer.invalidate()
+            presenter?.updateTimerButton(status: .resume)
             presenter?.switchPickerInteraction()
         } else {
-            timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(startCountdown), userInfo: nil, repeats: true)
             sleepTimerIsOn = true
-            presenter?.setTimerButtonPause()
+            timer = Timer.scheduledTimer(timeInterval: 1,
+                                         target: self,
+                                         selector: #selector(startCountdown),
+                                         userInfo: nil,
+                                         repeats: true)
+            presenter?.updateTimerButton(status: .pause)
             presenter?.switchPickerInteraction()
         }
     }
@@ -65,5 +47,21 @@ extension TimerInteractor: TimerBusinessLogic {
 // MARK: - Private Methods
 
 private extension TimerInteractor {
-    
+    @objc
+    func startCountdown() {
+        if TimerViewModel.pickerSeconds >= 0 {
+            let minutes = String(format: "%02d", TimerViewModel.pickerSeconds / 60)
+            let seconds = String(format: "%02d", TimerViewModel.pickerSeconds % 60)
+            let timerLabelText = minutes + ":" + seconds
+            TimerViewModel.pickerSeconds -= 1
+            presenter?.updateTimerLabel(with: timerLabelText)
+        }
+        if TimerViewModel.pickerSeconds < 0 {
+            sleepTimerIsOn = false
+            timer.invalidate()
+            notification.post(name: Notification.Name("PauseMusic"), object: nil)
+            presenter?.updateTimerButton(status: .chilling)
+            print("Countdown has ended. Radio paused.")
+        }
+    }
 }

@@ -9,7 +9,7 @@
 import Foundation
 
 protocol PlaylistPresentationLogic {
-    func refresh()
+    func presentRefresh()
 }
 
 final class PlaylistPresenter {
@@ -21,8 +21,7 @@ final class PlaylistPresenter {
 // MARK: - PlaylistPresentationLogic
 
 extension PlaylistPresenter: PlaylistPresentationLogic {
-    
-    func refresh() {
+    func presentRefresh() {
         viewController?.reloadData()
         viewController?.endRefreshing()
     }

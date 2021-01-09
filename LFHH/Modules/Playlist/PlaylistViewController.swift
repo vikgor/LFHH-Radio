@@ -17,9 +17,8 @@ final class PlaylistViewController: UIViewController {
     
     @IBOutlet private weak var tableView: UITableView!
     
-    private let screenSize: CGRect = UIScreen.main.bounds
     private let viewModel = PlaylistViewModel()
-    
+
     var interactor: PlaylistBusinessLogic?
     var router: PlaylistRoutingLogic?
     
@@ -35,33 +34,18 @@ final class PlaylistViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        interactor?.startDoingStuff()
-        
-        
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.refreshControl?.addTarget(self,
-                                            action: #selector(refresh),
-                                            for: UIControl.Event.valueChanged)
-        
-        //TODO: - Make the 10 rows fill the entire screen
-        tableView.rowHeight = screenSize.height * 0.09
-        
+        interactor?.preparePlaylist()
+        setupSubviews()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        interactor?.getRadioPlaylist()
     }
     
     @objc
     func refresh(sender: AnyObject) {
         interactor?.getRadioPlaylist()
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        print("Getting updated playlist...")
-        interactor?.getRadioPlaylist()
-    }
-    
-//    override func numberOfSections(in tableView: UITableView) -> Int {
-//        return 1
-//    }
     
 }
 
@@ -77,17 +61,10 @@ extension PlaylistViewController: PlaylistDisplayLogic {
     }
 }
 
-// MARK: - Private Methods
-
-private extension PlaylistViewController {
-    
-}
-
 // MARK: - UITableViewDelegate, UITableViewDataSource
 
 extension PlaylistViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return (interactor?.historyArray!.count)!
         return PlaylistViewModel.historyArray?.count ?? 0
     }
     
@@ -96,5 +73,29 @@ extension PlaylistViewController: UITableViewDelegate, UITableViewDataSource {
         cell.textLabel?.text = String((PlaylistViewModel.historyArray?[indexPath.item] ?? "Unknown song"))
         cell.textLabel?.textColor = .white
         return cell
+    }
+}
+
+// MARK: - Private Methods
+
+private extension PlaylistViewController {
+    func setupSubviews() {
+        tableView.delegate = self
+        tableView.dataSource = self
+        
+        let screenSize: CGRect = UIScreen.main.bounds
+        let tabBarHeight = tabBarController?.tabBar.frame.size.height ?? 49
+        let statusBarHeight = UIApplication.shared.statusBarFrame.height
+        tableView.rowHeight = (screenSize.height - statusBarHeight - tabBarHeight) / 10
+        
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self,
+                                 action: #selector(refresh),
+                                 for: .valueChanged)
+        tableView.refreshControl = refreshControl
+        tableView.refreshControl?.tintColor = UIColor(named: "yellow")
+        
+        tableView.showsVerticalScrollIndicator = false
+        tableView.tableFooterView = UIView()
     }
 }

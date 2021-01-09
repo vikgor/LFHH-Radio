@@ -67,7 +67,7 @@ extension PlayerViewController: PlayerDisplayLogic {
     }
     
     func displayInfoCenter(with currentlyPlaying: CurrentSong) {
-        let image = #imageLiteral(resourceName: "lofinight")
+        let image = #imageLiteral(resourceName: "logo")
         let albumArt = MPMediaItemArtwork.init(boundsSize: image.size,
                                                requestHandler: { (size) -> UIImage in
                                                 return image

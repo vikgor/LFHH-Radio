@@ -9,7 +9,7 @@
 import Foundation
 
 protocol PlaylistBusinessLogic {
-    func startDoingStuff()
+    func preparePlaylist()
     func getRadioPlaylist()
 }
 
@@ -17,30 +17,18 @@ final class PlaylistInteractor {
     
     var presenter: PlaylistPresentationLogic?
     
-    var viewModel = PlaylistViewModel()
-    
-//    let myURLString = "https://vivalaresistance.ru/lfhh/lfhhhistory.php"
-//    let myURLString = "https://vivalaresistance.ru/radio/stuff/vlrradiobot.php?type=getLofiPlaylist"
-//    var historyArray: [String.SubSequence]?
-////    Why did I do this??
-//    var historyArray: [String.SubSequence]? {
-//        didSet {
-//            tableView.reloadData()
-//
-//        }
-//    }
 }
 
 // MARK: - PlaylistBusinessLogic
 
 extension PlaylistInteractor: PlaylistBusinessLogic {
-    func startDoingStuff() {
+    func preparePlaylist() {
         getRadioPlaylist()
     }
     
     func getRadioPlaylist() {
-        guard let myURL = NSURL(string: viewModel.myURLString) else {
-            print("Error: \(viewModel.myURLString) doesn't seem to be a valid URL")
+        guard let myURL = NSURL(string: PlaylistViewModel.myURLString) else {
+            print("Error: \(PlaylistViewModel.myURLString) doesn't seem to be a valid URL")
             return
         }
         do {
@@ -50,7 +38,7 @@ extension PlaylistInteractor: PlaylistBusinessLogic {
             print("Error: \(error)")
         }
         
-        presenter?.refresh()
+        presenter?.presentRefresh()
     }
 }
 

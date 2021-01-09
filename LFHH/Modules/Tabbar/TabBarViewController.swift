@@ -123,7 +123,7 @@ private extension TabBarViewController {
         
         let navigation = UINavigationController(rootViewController: viewController)
         
-        navigation.setNavigationBarHidden(false, animated: true)
+        navigation.setNavigationBarHidden(true, animated: true)
         navigation.tabBarItem = UITabBarItem(
             title: nil,
             image: #imageLiteral(resourceName: "music-player"),

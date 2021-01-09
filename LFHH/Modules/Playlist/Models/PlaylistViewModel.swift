@@ -10,7 +10,7 @@ import Foundation
 
 struct PlaylistViewModel {
     
-    let myURLString = "https://vivalaresistance.ru/radio/stuff/vlrradiobot.php?type=getLofiPlaylist"
+    static let myURLString = "https://vivalaresistance.ru/radio/stuff/vlrradiobot.php?type=getLofiPlaylist"
     static var historyArray: [String.SubSequence]?
     
 }

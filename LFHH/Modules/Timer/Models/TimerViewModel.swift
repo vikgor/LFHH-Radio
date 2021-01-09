@@ -19,11 +19,11 @@ struct TimerViewModel {
         ("1 hour"     , 3600)
     ]
     static var pickerSeconds = 60
-    static let chillLabel = "Chill..."
+    static let chillLabel = "chill"
 }
 
 enum ChillStatus: String {
-    case chilling = "Chilling..."
-    case resume = "Resume"
-    case pause = "Pause"
+    case chilling = "chilling..."
+    case resume = "resume"
+    case pause = "pause"
 }

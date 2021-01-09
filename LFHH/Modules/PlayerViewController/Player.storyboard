@@ -4,9 +4,15 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="Disko.ttf">
+            <string>Disko</string>
+        </array>
+    </customFonts>
     <scenes>
         <!--Player View Controller-->
         <scene sceneID="yVz-di-wkt">
@@ -17,17 +23,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WEx-UA-tSe">
-                                <rect key="frame" x="16" y="488" width="396" height="24"/>
+                                <rect key="frame" x="16" y="451" width="396" height="24"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lofinight" translatesAutoresizingMaskIntoConstraints="NO" id="BEg-jw-ypu">
-                                <rect key="frame" x="0.0" y="44" width="428" height="428"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="BEg-jw-ypu" secondAttribute="height" multiplier="1:1" id="4aQ-ET-egH"/>
-                                </constraints>
-                            </imageView>
                             <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L6c-KO-puI">
                                 <rect key="frame" x="189" y="778" width="50" height="50"/>
                                 <constraints>
@@ -46,21 +46,27 @@
                                     <constraint firstAttribute="height" constant="32" id="pXH-AC-xsa"/>
                                 </constraints>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="lfhh" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WcA-PP-wfL">
+                                <rect key="frame" x="20" y="254.33333333333334" width="388" height="116.66666666666666"/>
+                                <fontDescription key="fontDescription" name="Disko" family="Disko" pointSize="100"/>
+                                <color key="textColor" name="yellow"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="1Hy-kh-tPV"/>
-                        <color key="backgroundColor" systemColor="viewFlipsideBackgroundColor"/>
+                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="WcA-PP-wfL" firstAttribute="leading" secondItem="1Hy-kh-tPV" secondAttribute="leading" constant="20" id="3Yh-MJ-KKO"/>
                             <constraint firstItem="1Hy-kh-tPV" firstAttribute="bottom" secondItem="rMj-vl-KNd" secondAttribute="bottom" constant="16" id="IaM-xa-Cjc"/>
                             <constraint firstItem="WEx-UA-tSe" firstAttribute="leading" secondItem="1Hy-kh-tPV" secondAttribute="leading" constant="16" id="NU2-nu-ba7"/>
-                            <constraint firstItem="1Hy-kh-tPV" firstAttribute="trailing" secondItem="BEg-jw-ypu" secondAttribute="trailing" id="PFD-4H-h7e"/>
+                            <constraint firstItem="1Hy-kh-tPV" firstAttribute="trailing" secondItem="WcA-PP-wfL" secondAttribute="trailing" constant="20" id="Nsp-tb-7tp"/>
+                            <constraint firstItem="WEx-UA-tSe" firstAttribute="centerY" secondItem="8By-e8-dm9" secondAttribute="centerY" id="Rjf-dX-zZX"/>
                             <constraint firstItem="1Hy-kh-tPV" firstAttribute="trailing" secondItem="rMj-vl-KNd" secondAttribute="trailing" constant="16" id="XPE-f9-CfH"/>
+                            <constraint firstItem="WEx-UA-tSe" firstAttribute="top" secondItem="WcA-PP-wfL" secondAttribute="bottom" constant="80" id="afT-Zu-8QO"/>
                             <constraint firstItem="L6c-KO-puI" firstAttribute="centerX" secondItem="1Hy-kh-tPV" secondAttribute="centerX" id="dHB-tT-DCE"/>
-                            <constraint firstItem="WEx-UA-tSe" firstAttribute="top" secondItem="BEg-jw-ypu" secondAttribute="bottom" constant="16" id="dgK-eE-BcS"/>
-                            <constraint firstItem="BEg-jw-ypu" firstAttribute="top" secondItem="1Hy-kh-tPV" secondAttribute="top" id="dii-TL-7I5"/>
                             <constraint firstItem="rMj-vl-KNd" firstAttribute="leading" secondItem="1Hy-kh-tPV" secondAttribute="leading" constant="16" id="gXL-QQ-JxU"/>
                             <constraint firstItem="rMj-vl-KNd" firstAttribute="top" secondItem="L6c-KO-puI" secondAttribute="bottom" constant="16" id="nG5-A2-u8e"/>
                             <constraint firstItem="1Hy-kh-tPV" firstAttribute="trailing" secondItem="WEx-UA-tSe" secondAttribute="trailing" constant="16" id="uon-fG-iCw"/>
-                            <constraint firstItem="BEg-jw-ypu" firstAttribute="leading" secondItem="1Hy-kh-tPV" secondAttribute="leading" id="wJb-5x-z1A"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="" image="music-player" springLoaded="YES" id="viz-kY-McK"/>
@@ -72,15 +78,14 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="k4B-CW-OFU" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="181" y="132"/>
+            <point key="canvasLocation" x="180.84112149532709" y="131.53347732181427"/>
         </scene>
     </scenes>
     <resources>
-        <image name="lofinight" width="900" height="900"/>
         <image name="music-player" width="25" height="25"/>
         <image name="play-button-white" width="512" height="512"/>
-        <systemColor name="viewFlipsideBackgroundColor">
-            <color red="0.1215686275" green="0.12941176469999999" blue="0.14117647059999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
+        <namedColor name="yellow">
+            <color red="0.96078431372549022" green="0.87450980392156863" blue="0.30196078431372547" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
     </resources>
 </document>

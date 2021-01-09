@@ -21,7 +21,7 @@ struct PlayerViewModel {
 }
 
 enum PlayerStatus: String {
-    case notPlaying = "Press Play..."
+    case notPlaying = "press play"
     case playing = "connecting..."
-    case paused = "Paused..."
+    case paused = "paused"
 }

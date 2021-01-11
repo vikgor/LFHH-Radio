@@ -9,7 +9,7 @@
 import Foundation
 
 protocol PlayerPresentationLogic {
-    func updatePlayback(playerStatus: PlayerStatus, trackTitle: String?)
+    func updatePlayback(playerStatus: PlayerStatus, trackArtist: String?, trackTitle: String?)
     func presentInfoCenter(with currentlyPlaying: CurrentSong)
 }
 
@@ -23,8 +23,10 @@ final class PlayerPresenter {
 
 extension PlayerPresenter: PlayerPresentationLogic {
     
-    func updatePlayback(playerStatus: PlayerStatus, trackTitle: String?) {
-        viewController?.updatePlayback(playerStatus: playerStatus, trackTitle: trackTitle)
+    func updatePlayback(playerStatus: PlayerStatus, trackArtist: String?, trackTitle: String?) {
+        viewController?.updatePlayback(playerStatus: playerStatus,
+                                       trackArtist: trackArtist,
+                                       trackTitle: trackTitle)
     }
     
     func presentInfoCenter(with currentlyPlaying: CurrentSong) {

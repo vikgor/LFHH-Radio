@@ -74,6 +74,26 @@ extension PlaylistViewController: UITableViewDelegate, UITableViewDataSource {
         cell.textLabel?.textColor = .white
         return cell
     }
+    
+    /// Copy text in a cell
+    func tableView(_ tableView: UITableView, canPerformAction action: Selector, forRowAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
+        if (action.description == "copy:") {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, performAction action: Selector, forRowAt indexPath: IndexPath, withSender sender: Any?) {
+        if (action.description == "copy:") {
+            let cell = tableView.cellForRow(at: indexPath)
+            UIPasteboard.general.string = cell?.textLabel?.text
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, shouldShowMenuForRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
 }
 
 // MARK: - Private Methods

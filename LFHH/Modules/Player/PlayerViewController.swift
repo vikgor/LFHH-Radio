@@ -11,13 +11,14 @@ import AVFoundation
 import MediaPlayer
 
 protocol PlayerDisplayLogic: class {
-    func updatePlayback(playerStatus: PlayerStatus, trackTitle: String?)
+    func updatePlayback(playerStatus: PlayerStatus, trackArtist: String?, trackTitle: String?)
     func displayInfoCenter(with currentlyPlaying: CurrentSong)
 }
 
 final class PlayerViewController: UIViewController {
     
     @IBOutlet private weak var radioButton: UIButton!
+    @IBOutlet private weak var trackArtistLabel: UILabel!
     @IBOutlet private weak var trackTitleLabel: UILabel!
     @IBOutlet private weak var volumeView: MPVolumeView!
     
@@ -53,8 +54,9 @@ final class PlayerViewController: UIViewController {
 
 extension PlayerViewController: PlayerDisplayLogic {
     
-    func updatePlayback(playerStatus: PlayerStatus, trackTitle: String?) {
-        trackTitleLabel.text = (trackTitle != nil) ? trackTitle : playerStatus.rawValue
+    func updatePlayback(playerStatus: PlayerStatus, trackArtist: String?, trackTitle: String?) {
+        trackArtistLabel.text = (trackArtist != nil) ? trackArtist : playerStatus.rawValue
+        trackTitleLabel.text = trackTitle
         
         switch playerStatus {
         case .notPlaying:

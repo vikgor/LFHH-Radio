@@ -52,19 +52,28 @@
                                 <color key="textColor" name="yellow"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T6b-04-oFk">
+                                <rect key="frame" x="16" y="491" width="396" height="24"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="1Hy-kh-tPV"/>
                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="1Hy-kh-tPV" firstAttribute="trailing" secondItem="T6b-04-oFk" secondAttribute="trailing" constant="16" id="2IW-LM-bU6"/>
                             <constraint firstItem="WcA-PP-wfL" firstAttribute="leading" secondItem="1Hy-kh-tPV" secondAttribute="leading" constant="20" id="3Yh-MJ-KKO"/>
                             <constraint firstItem="1Hy-kh-tPV" firstAttribute="bottom" secondItem="rMj-vl-KNd" secondAttribute="bottom" constant="16" id="IaM-xa-Cjc"/>
                             <constraint firstItem="WEx-UA-tSe" firstAttribute="leading" secondItem="1Hy-kh-tPV" secondAttribute="leading" constant="16" id="NU2-nu-ba7"/>
                             <constraint firstItem="1Hy-kh-tPV" firstAttribute="trailing" secondItem="WcA-PP-wfL" secondAttribute="trailing" constant="20" id="Nsp-tb-7tp"/>
+                            <constraint firstItem="T6b-04-oFk" firstAttribute="top" secondItem="WEx-UA-tSe" secondAttribute="bottom" constant="16" id="Olu-kI-JEr"/>
                             <constraint firstItem="WEx-UA-tSe" firstAttribute="centerY" secondItem="8By-e8-dm9" secondAttribute="centerY" id="Rjf-dX-zZX"/>
                             <constraint firstItem="1Hy-kh-tPV" firstAttribute="trailing" secondItem="rMj-vl-KNd" secondAttribute="trailing" constant="16" id="XPE-f9-CfH"/>
                             <constraint firstItem="WEx-UA-tSe" firstAttribute="top" secondItem="WcA-PP-wfL" secondAttribute="bottom" constant="80" id="afT-Zu-8QO"/>
                             <constraint firstItem="L6c-KO-puI" firstAttribute="centerX" secondItem="1Hy-kh-tPV" secondAttribute="centerX" id="dHB-tT-DCE"/>
                             <constraint firstItem="rMj-vl-KNd" firstAttribute="leading" secondItem="1Hy-kh-tPV" secondAttribute="leading" constant="16" id="gXL-QQ-JxU"/>
+                            <constraint firstItem="T6b-04-oFk" firstAttribute="leading" secondItem="1Hy-kh-tPV" secondAttribute="leading" constant="16" id="gny-Tm-khZ"/>
                             <constraint firstItem="rMj-vl-KNd" firstAttribute="top" secondItem="L6c-KO-puI" secondAttribute="bottom" constant="16" id="nG5-A2-u8e"/>
                             <constraint firstItem="1Hy-kh-tPV" firstAttribute="trailing" secondItem="WEx-UA-tSe" secondAttribute="trailing" constant="16" id="uon-fG-iCw"/>
                         </constraints>
@@ -72,7 +81,8 @@
                     <tabBarItem key="tabBarItem" title="" image="music-player" springLoaded="YES" id="viz-kY-McK"/>
                     <connections>
                         <outlet property="radioButton" destination="L6c-KO-puI" id="KC1-ZH-pbT"/>
-                        <outlet property="trackTitleLabel" destination="WEx-UA-tSe" id="wut-Xi-eMb"/>
+                        <outlet property="trackArtistLabel" destination="WEx-UA-tSe" id="wut-Xi-eMb"/>
+                        <outlet property="trackTitleLabel" destination="T6b-04-oFk" id="46C-98-yt2"/>
                         <outlet property="volumeView" destination="rMj-vl-KNd" id="jFu-6m-ZBc"/>
                     </connections>
                 </viewController>

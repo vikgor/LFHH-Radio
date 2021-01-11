@@ -7,5 +7,4 @@
 - [ ] Resume audio after interruption
 - [ ] splitFileNameIntoArtistAndTrack(): may crash if name format isn't "aaa - bbb.mp3"
 - [ ] Design
-    - [ ] Long track titles fix
     - [ ] add views/buttons (contacts, song history, save current song option, other links and stuff)

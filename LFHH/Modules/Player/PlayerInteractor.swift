@@ -40,7 +40,9 @@ final class PlayerInteractor: NSObject {
                 checkIfAlive(originalFileName)
                 currentlyPlaying.splitFileNameIntoArtistAndTrack(from: originalFileName)
                 updateInfoCenter()
-                presenter?.updatePlayback(playerStatus: .notPlaying, trackTitle: currentlyPlaying.makeFullSongName())
+                presenter?.updatePlayback(playerStatus: .notPlaying,
+                                          trackArtist: currentlyPlaying.artist,
+                                          trackTitle: currentlyPlaying.track)
                 
                 print("New song much?\nFile name: \(originalFileName)\nArtist: \(currentlyPlaying.artist)\nTrack: \(currentlyPlaying.track)")
             }
@@ -71,7 +73,9 @@ private extension PlayerInteractor {
     func preparePlayer() {
         makeAudioWorkInBackground()
         setupRemoteTransportControls()
-        presenter?.updatePlayback(playerStatus: .notPlaying, trackTitle: nil)
+        presenter?.updatePlayback(playerStatus: .notPlaying,
+                                  trackArtist: nil,
+                                  trackTitle: nil)
         timerObserver.addObserver(self,
                                   selector: #selector(pausePlayback),
                                   name: Notification.Name("PauseMusic"), object: nil)
@@ -83,7 +87,9 @@ private extension PlayerInteractor {
             return
         }
         playerItem = AVPlayerItem(url: url)
-        presenter?.updatePlayback(playerStatus: .playing, trackTitle: nil)
+        presenter?.updatePlayback(playerStatus: .playing,
+                                  trackArtist: nil,
+                                  trackTitle: nil)
         radioPlayer = AVPlayer(playerItem: playerItem)
         radioPlayer.play()
         let playerItem = radioPlayer.currentItem
@@ -97,7 +103,9 @@ private extension PlayerInteractor {
         if playerStatus == .playing {
             playerStatus = .paused
             radioPlayer.pause()
-            presenter?.updatePlayback(playerStatus: .paused, trackTitle: nil)
+            presenter?.updatePlayback(playerStatus: .paused,
+                                      trackArtist: nil,
+                                      trackTitle: nil)
             radioPlayer.currentItem?.removeObserver(self, forKeyPath: "timedMetadata")
         }
     }

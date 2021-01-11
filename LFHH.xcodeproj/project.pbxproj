@@ -88,7 +88,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0599026325A736C100AD9822 /* PlayerViewController */ = {
+		0599026325A736C100AD9822 /* Player */ = {
 			isa = PBXGroup;
 			children = (
 				0599027625A7391B00AD9822 /* Models */,
@@ -99,7 +99,7 @@
 				0599026425A736C100AD9822 /* PlayerConfigurator.swift */,
 				0599026F25A736CB00AD9822 /* Player.storyboard */,
 			);
-			path = PlayerViewController;
+			path = Player;
 			sourceTree = "<group>";
 		};
 		0599027625A7391B00AD9822 /* Models */ = {
@@ -171,7 +171,7 @@
 			isa = PBXGroup;
 			children = (
 				0599027A25A7397600AD9822 /* Tabbar */,
-				0599026325A736C100AD9822 /* PlayerViewController */,
+				0599026325A736C100AD9822 /* Player */,
 				0599028B25A73D1600AD9822 /* Timer */,
 				059902A725A740FA00AD9822 /* Playlist */,
 			);
